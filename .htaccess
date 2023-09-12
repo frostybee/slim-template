@@ -1,0 +1,10 @@
+RewriteEngine On
+# Change the path of your sub directory.
+# Also, make sure the name of sub directory is specified without a trailing slash (/)
+RewriteBase /slim-template
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+# TODO: enable slim-jwt-auth related .
+# RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

@@ -1,0 +1,22 @@
+{
+    "name": "vanier/api",
+    "description": "A Slim-based application skeleton",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Vanier\\Api\\": "src/"
+        }
+    },
+    "authors": [{
+        "name": "Put your name here",
+        "email": "oi@oi.com"
+    }],
+    "require": {
+        "slim/slim": "^4.8",
+        "guzzlehttp/guzzle": "^7.5",
+        "vlucas/phpdotenv": "^5.5",
+        "firebase/php-jwt": "^6.3",
+        "monolog/monolog": "^2.9",
+        "slim/psr7": "^1.4"
+    }
+}
