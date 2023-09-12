@@ -21,7 +21,6 @@ $db_config = [
     'port' => '3309'
 ];
 
-
 // HTTP response status code. 
 define('HTTP_OK', 200);
 define('HTTP_CREATED', 201);

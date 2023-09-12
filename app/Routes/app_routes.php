@@ -18,7 +18,7 @@ $app->get('/', [AboutController::class, 'handleAboutApi']);
 
 // ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
-    $response->getBody()->write("Reporting! Hello there!");        
-    
+
+    $response->getBody()->write("Reporting! Hello there!");            
     return $response;
 });

@@ -11,7 +11,7 @@ class BaseController
     {
         // var_dump($data);
         $json_data = json_encode($data);
-        //-- Write data into the response's body.        
+        //-- Write JSON data into the response's body.        
         $response->getBody()->write($json_data);
         return $response->withStatus($status_code)->withAddedHeader(HEADERS_CONTENT_TYPE, APP_MEDIA_TYPE_JSON);
     }

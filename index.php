@@ -5,7 +5,7 @@ require __DIR__ . '/vendor/autoload.php';
 
  // Include the file that contains the application's global configuration settings,
  // database credentials, etc.
-require_once __DIR__ . '/src/Config/app_config.php';
+require_once __DIR__ .'/app/Config/app_config.php';
 
 //--Step 1) Instantiate a Slim app.
 $app = AppFactory::create();
@@ -23,7 +23,7 @@ $app->setBasePath("/slim-template");
 
 // Here we include the file that contains the application routes. 
 // NOTE: your routes must be managed in the api_routes.php file.
-require_once __DIR__ . '/src/Routes/app_routes.php';
+require_once __DIR__ . '/app/Routes/app_routes.php';
 
 // Run the app.
 $app->run();

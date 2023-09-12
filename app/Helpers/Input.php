@@ -5,6 +5,7 @@ namespace Vanier\Api\Helpers;
 
 /**
  * A helper class that exposes various data validation functions. 
+ * @author Sleiman Rabah
  */
 class Input
 {
