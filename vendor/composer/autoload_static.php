@@ -64,7 +64,7 @@ class ComposerStaticInit02372c7f7c828659b19ff2ef46ab78e9
     public static $prefixDirsPsr4 = array (
         'Vanier\\Api\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src',
+            0 => __DIR__ . '/../..' . '/app',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
