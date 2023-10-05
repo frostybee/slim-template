@@ -2,12 +2,21 @@
 
 This repository contains an application skeleton for creating REST-based Web services. The latest version of the [**Slim micro framework**](https://www.slimframework.com/) is being used.
 
-## Deployment Instructions
+## Using this Template: Deployment Instructions
 
-1. Copy the `slim-template` folder into your **document root** (that is, `htdocs`)
-2. Rename the `slim-template` folder to `[project_name]-api`. For example, `films-api`
-3. In the `.htaccess` file, change the specified subdirectory that is assigned to the `RewriteBase` directive.  The name of the subdirectory must be the same as the one you chose in Step 2). For example, change from `RewriteBase /slim-template` to  `RewriteBase /films-api`
-4. In `index.php`, change the applications's base path directory from  `$app->setBasePath("/slim-template");` to `$app->setBasePath("/[project_name]-api");` where `[project_name]` is the name of the subdirectory you chose in Step 2).
+1. Clone this repository
+2. Remove the .git directory
+3. Copy the `slim-template` folder into your Web server's **document root** (that is, `htdocs`)
+4. Rename the `slim-template` folder to `[project_name]-api`. For example, `films-api`
+5. Open your `[project_name]-api` folder in VS Code
+6. In the `.htaccess` file, change the specified subdirectory that is assigned to the `RewriteBase` directive.  The name of the subdirectory must be the same as the one you chose in Step 2). For example, change from `RewriteBase /slim-template` to  `RewriteBase /films-api`
+7. In `index.php`, change the applications's base path directory from  `$app->setBasePath("/slim-template");` to `$app->setBasePath("/[project_name]-api");` where `[project_name]` is the name of the subdirectory you chose in Step 2).
+8. Open a VS Code terminal window: hit `` Ctrl+` ``
+9. Run the following command
+
+```bat
+composer.bat update
+```
 
 ## Importing and Populating the Sample MySQL Database
 
@@ -22,7 +31,7 @@ The `data/` folder contains the [**Sakila**](https://dev.mysql.com/doc/sakila/en
 
 ---
 
-The following dependencies have been already added to this template. 
+The following dependencies have been already added to this template.
 
 1. `slim/slim:"4.*"`
 2. `guzzlehttp/guzzle`
@@ -35,6 +44,7 @@ Optional: you can use `composer` to either update the referenced dependencies or
 ## VS Code Extensions for Web Development
 
 ---
+
 ### PHP, HTML, and JavaScript
 
 1. [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)
