@@ -15,6 +15,5 @@ class HelloMiddleware implements MiddlewareInterface
         // DO NOT remove the following statements. 
         $response = $handler->handle($request);
         return $response;
-    }
-    
+    }    
 }

@@ -9,9 +9,9 @@ require_once __DIR__ .'/app/Config/app_config.php';
 
 //--Step 1) Instantiate a Slim app.
 $app = AppFactory::create();
+
 //-- Add the routing and body parsing middleware.
 $app->addBodyParsingMiddleware();
-
 $app->addRoutingMiddleware();
 // NOTE: the error handling middleware MUST be added last.
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
