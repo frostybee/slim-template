@@ -1,10 +1,12 @@
 <?php declare(strict_types=1);
+
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Controllers\AboutController;
 use Vanier\Api\Controllers\FilmsController;
+use Vanier\Api\Helpers\DateTimeHelper;
 
 // Import the app instance into this file's scope.
 global $app;
@@ -19,6 +21,7 @@ $app->get('/', [AboutController::class, 'handleAboutApi']);
 // ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
 
-    $response->getBody()->write("Reporting! Hello there!");            
+    $now = DateTimeHelper::getDateAndTime(DateTimeHelper::D_M_Y);        
+    $response->getBody()->write("Reporting! Hello there! The current time is: ".$now);            
     return $response;
 });

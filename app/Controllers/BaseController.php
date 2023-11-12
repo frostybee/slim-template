@@ -1,13 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class BaseController
+abstract class BaseController
 {
-    protected function prepareOkResponse(Response $response, array $data, int $status_code = 200)
+    protected function preparedResponse(Response $response, array $data, int $status_code = 200)
     {
         // var_dump($data);
         $json_data = json_encode($data);

@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php 
+declare(strict_types=1);
 
 namespace Vanier\Api\Models;
 
@@ -10,7 +11,7 @@ use Vanier\Api\Helpers\PaginationHelper;
  * A wrapper class for the PDO MySQL API.
  * This class can be extended for further customization.
  */
-class BaseModel
+abstract class BaseModel
 {
 
     /**

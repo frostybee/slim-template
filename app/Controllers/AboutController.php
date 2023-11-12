@@ -13,6 +13,6 @@ class AboutController extends BaseController
             'about' => 'Welcome, this is a Web service that provides this and that...',
             'resources' => 'Blah'
         );                
-        return $this->prepareOkResponse($response, $data);
+        return $this->preparedResponse($response, $data);
     }
 }
