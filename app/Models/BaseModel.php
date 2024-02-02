@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 declare(strict_types=1);
 
 namespace Vanier\Api\Models;
@@ -88,24 +89,13 @@ abstract class BaseModel
 
 
     /**
-     * Run raw sql query 
-     * 
-     * @param  string $sql       sql query
-     * @return void
-     */
-    protected function raw($sql)
-    {
-        $this->db->query($sql);
-    }
-
-    /**
      * Executes an SQL query using a prepared statement.
      * Arguments can be also passed to further filter the obtained result set.
      * @param  string $sql       sql query
      * @param  array  $args      filtering options that can be added to the query.
      * @return object            returns a PDO object
      */
-    protected function run($sql, $args = [])
+    private function run($sql, $args = [])
     {
         if (empty($args)) {
             return $this->db->query($sql);
@@ -118,12 +108,12 @@ abstract class BaseModel
     }
 
     /**
-     * Executes a query and gets an array of matching records.
+     * Executes the provided query.
      * 
      * @param  string $sql       sql query
      * @param  array  $args      filtering options that can be added to the query.
      * @param  object $fetchMode set return mode ie object or array
-     * @return object            returns multiple records
+     * @return object            returns an array containing the selected records.
      */
     protected function fetchAll($sql, $args = [], $fetchMode = PDO::FETCH_ASSOC)
     {
@@ -145,19 +135,7 @@ abstract class BaseModel
         return $this->run($sql, $args)->fetch($fetchMode);
     }
 
-    /**
-     * Gets a table record by its id.
-     * 
-     * @param  string $table     name of table
-     * @param  integer $id       id of record
-     * @param  object $fetchMode set return mode ie object or array
-     * @return object            returns single record
-     */
-    protected function getById($table, $id, $fetchMode = PDO::FETCH_ASSOC)
-    {
-        return $this->run("SELECT * FROM $table WHERE id = ?", [$id])->fetch($fetchMode);
-    }
-
+    
     /**
      * Gets the number of records contained in the obtained result set.
      * 
@@ -271,57 +249,6 @@ abstract class BaseModel
         }
 
         $stmt = $this->run("DELETE FROM $table WHERE $whereDetails $limit", $values);
-
-        return $stmt->rowCount();
-    }
-
-    /**
-     * Delete all records records
-     * 
-     * @param  string $table table name
-     */
-    protected function deleteAll($table)
-    {
-        $stmt = $this->run("DELETE FROM $table");
-
-        return $stmt->rowCount();
-    }
-
-    /**
-     * Delete record by id
-     * 
-     * @param  string $table table name
-     * @param  integer $id id of record
-     */
-    protected function deleteById($table, $id)
-    {
-        $stmt = $this->run("DELETE FROM $table WHERE id = ?", [$id]);
-
-        return $stmt->rowCount();
-    }
-
-    /**
-     * Delete record by ids
-     * 
-     * @param  string $table table name
-     * @param  string $column name of column
-     * @param  string $ids ids of records
-     */
-    protected function deleteByIds(string $table, string $column, string $ids)
-    {
-        $stmt = $this->run("DELETE FROM $table WHERE $column IN ($ids)");
-
-        return $stmt->rowCount();
-    }
-
-    /**
-     * truncate table
-     * 
-     * @param  string $table table name
-     */
-    protected function truncate($table)
-    {
-        $stmt = $this->run("TRUNCATE TABLE $table");
 
         return $stmt->rowCount();
     }

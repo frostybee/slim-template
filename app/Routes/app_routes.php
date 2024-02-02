@@ -3,9 +3,7 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Controllers\AboutController;
-use Vanier\Api\Controllers\FilmsController;
 use Vanier\Api\Helpers\DateTimeHelper;
 
 // Import the app instance into this file's scope.

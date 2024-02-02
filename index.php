@@ -2,6 +2,11 @@
 
 use Slim\Factory\AppFactory;
 
+define('APP_BASE_DIR',  __DIR__);
+// TODO: This file must be added to your .gitignore file. 
+define('APP_ENV_FILE', 'config.env');
+define('APP_JWT_TOKEN_KEY', 'APP_JWT_TOKEN');
+
 require __DIR__ . '/vendor/autoload.php';
 
  // Include the file that contains the application's global configuration settings,
