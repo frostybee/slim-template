@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 abstract class BaseController
 {
-    protected function preparedResponse(Response $response, array $data, int $status_code = 200)
+    protected function makeResponse(Response $response, array $data, int $status_code = 200): Response
     {
         // var_dump($data);
         $json_data = json_encode($data);

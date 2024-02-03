@@ -4,28 +4,25 @@ This repository contains an application skeleton for creating REST-based Web ser
 
 ## Using this Template: Deployment Instructions
 
-1. Clone this repository
-2. Remove the .git directory
-3. Copy the `slim-template` folder into your Web server's **document root** (that is, `htdocs`)
-4. Rename the `slim-template` folder to `[project_name]-api`. For example, `films-api`
+1. Download the content of this repository as .zip file.
+2. Extract the slim-template-main.zip file locally.
+3. Copy the `slim-template-main` folder into your Web server's **document root** (that is, `htdocs`)
+4. Rename the `slim-template-main` folder to `[project_name]-api`. For example, `films-api`
 5. Open your `[project_name]-api` folder in VS Code
-6. In the `.htaccess` file, change the specified subdirectory that is assigned to the `RewriteBase` directive.  The name of the subdirectory must be the same as the one you chose in Step 2). For example, change from `RewriteBase /slim-template` to  `RewriteBase /films-api`
-7. In `index.php`, change the applications's base path directory from  `$app->setBasePath("/slim-template");` to `$app->setBasePath("/[project_name]-api");` where `[project_name]` is the name of the subdirectory you chose in Step 2).
+6. In the `.htaccess` file, change the specified subdirectory that is assigned to the `RewriteBase` directive.  The name of the subdirectory must be the same as the one you chose in Step 4). For example, change from `RewriteBase /slim-template` to  `RewriteBase /films-api`
+7. In `index.php`, change the applications's base path directory from  `$app->setBasePath("/slim-template");` to `$app->setBasePath("/[project_name]-api");` where `[project_name]` is the name of the subdirectory you chose in Step 4).
 8. Open a VS Code terminal window: hit `` Ctrl+` ``
-9. Run the following command
+9. Run the following command to install or update the required dependencies
 
 ```bat
 composer.bat update
 ```
 
-## Importing and Populating the Sample MySQL Database
+**NOTE:** You can always clone this repository. However, you need to remove the ```.git``` ***hidden*** directory before you copy this template over to ```htdocs```
 
-The `data/` folder contains the [**Sakila**](https://dev.mysql.com/doc/sakila/en/) database, an open-source MySQL sample db.
+## MySQL Database Connection Settings
 
-1. Use phpMhyAdmin to import the .sql file containing the database schema and the INSERT statements.
-2. Before importing the database schema, disable the `Enable foreign key checks` option that can be found under the `Import` tab in `phpMhyAdmin`
-3. You can consult the structure of the Sakila database at [Mysql Doc](https://dev.mysql.com/doc/sakila/en/sakila-structure.html)
-4. In `app/config/app_config.php`, change the value of DB_NAME constant to reflect the name of the database you want to connect to.
+In `app/config/app_config.php`, change the value of DB_NAME constant to reflect the name of the database you want to connect to. You may also want to change the database connection credentials in that file.
 
 ## Dependencies
 
@@ -41,7 +38,7 @@ The following dependencies have been already added to this template.
 
 Optional: you can use `composer` to either update the referenced dependencies or add additional ones based on your implementation's requirements.
 
-## VS Code Extensions for Web Development
+## Recommended VS Code Extensions for Web Development
 
 ---
 

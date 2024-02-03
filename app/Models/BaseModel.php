@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vanier\Api\Models;
+// namespace Vanier\Api\Models;
 
 use PDO;
 use Exception;
@@ -18,7 +18,7 @@ abstract class BaseModel
     /**
      * holds a database connection.
      */
-    protected $db;
+    private $db;
 
     /**
      * The index of the current page.
@@ -76,17 +76,6 @@ abstract class BaseModel
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
     }
-
-    /**
-     * get PDO instance
-     * 
-     * @return $db PDO instance
-     */
-    protected function getPdo()
-    {
-        return $this->db;
-    }
-
 
     /**
      * Executes an SQL query using a prepared statement.

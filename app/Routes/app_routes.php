@@ -9,14 +9,14 @@ use Vanier\Api\Helpers\DateTimeHelper;
 // Import the app instance into this file's scope.
 global $app;
 
-// NOTE: Add your app routes here.
-// The callbacks must be implemented in a controller class.
-// The Vanier\Api must be used as namespace prefix. 
+// TODO: Add your app's routes here.
+//! The callbacks must be implemented in a controller class.
+//! The Vanier\Api must be used as namespace prefix. 
 
-// ROUTE: GET /
-$app->get('/', [AboutController::class, 'handleAboutApi']); 
+//* ROUTE: GET /
+$app->get('/', [AboutController::class, 'handleAboutWebService']); 
 
-// ROUTE: GET /hello
+//* ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
 
     $now = DateTimeHelper::getDateAndTime(DateTimeHelper::D_M_Y);        

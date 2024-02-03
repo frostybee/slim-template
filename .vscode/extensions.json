@@ -17,10 +17,10 @@
         "devsense.phptools-vscode",
         "jaguadoromero.vscode-php-create-class",
         "xdebug.php-pack",
-        "bmewburn.vscode-intelephense-client",
         "rangav.vscode-thunder-client",
         "enkia.tokyo-night",
         "vscode-icons-team.vscode-icons",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "yzane.markdown-pdf"
     ]
 }

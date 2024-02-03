@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 // Constants for MySQL database configuration/credentials.
 //TODO: change the following values if you have different settings/options.

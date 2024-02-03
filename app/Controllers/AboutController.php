@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vanier\Api\Controllers;
 
@@ -7,12 +9,12 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class AboutController extends BaseController
 {
-    public function handleAboutApi(Request $request, Response $response, array $uri_args)
-    {        
+    public function handleAboutWebService(Request $request, Response $response, array $uri_args): Response
+    {
         $data = array(
-            'about' => 'Welcome, this is a Web service that provides this and that...',
+            'about' => 'Welcome! This is a Web service that provides this and that...',
             'resources' => 'Blah'
-        );                
-        return $this->preparedResponse($response, $data);
+        );
+        return $this->makeResponse($response, $data);
     }
 }

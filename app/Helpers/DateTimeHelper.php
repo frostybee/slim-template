@@ -6,7 +6,7 @@ use DateTime;
 use DateTimeZone;
 
 /**
- * A helper class that provides data and time utility functions.  
+ * A helper class that provides date and time utility functions.  
  * 
  * @author frostybee  
  */

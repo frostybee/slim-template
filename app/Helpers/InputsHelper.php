@@ -1,13 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vanier\Api\Helpers;
 
 
 /**
  * A helper class that exposes various data validation functions. 
- * @author Sleiman Rabah
+ * @author frostybee
  */
-class Input
+class InputsHelper
 {
 
 
@@ -39,9 +41,8 @@ class Input
 
 
     /**
-     * Checks whether a value is a valid int or not.
-     * If the min value is provided and it's greater than 0, 
-     * it verifies if the value is > min.
+     * Checks whether a value is a valid integer and is greater than
+     * the specified value. 
      * @param mixed $input
      * @return mixed bool|array
      */
