@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// namespace Vanier\Api\Models;
+namespace Vanier\Api\Models;
 
 use PDO;
 use Exception;
@@ -16,7 +16,7 @@ abstract class BaseModel
 {
 
     /**
-     * holds a database connection.
+     * holds a handle to a database connection.
      */
     private $db;
 
@@ -55,13 +55,11 @@ abstract class BaseModel
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         ];
         $options = array_replace($default_options, $options);
-        //var_dump($args);exit;
-        $type = isset($db_config['type']) ? $db_config['type'] : 'mysql';
-        $host = isset($db_config['host']) ? $db_config['host'] : 'localhost';
-        $charset = isset($db_config['charset']) ? $db_config['charset'] : 'utf8';
+
+        $host = $db_config['host'] ?? 'localhost';
         $charset = $db_config['charset'] ?? 'utf8mb4';
         $port = isset($db_config['port']) ? 'port=' . $db_config['port'] . ';' : '';
-        $password = isset($db_config['password']) ? $db_config['password'] : '';
+        $password = $db_config['password'] ?? '';
         $database = $db_config['database'];
         $username = $db_config['username'];
 
@@ -89,10 +87,21 @@ abstract class BaseModel
         if (empty($args)) {
             return $this->db->query($sql);
         }
-
         $stmt = $this->db->prepare($sql);
-        $stmt->execute($args);
-
+        //check if args is associative or sequential?
+        $is_assoc = (array() === $args) ? false : array_keys($args) !== range(0, count($args) - 1);
+        if ($is_assoc) {
+            foreach ($args as $key => $value) {
+                if (is_int($value)) {
+                    $stmt->bindValue(":$key", $value, PDO::PARAM_INT);
+                } else {
+                    $stmt->bindValue(":$key", $value);
+                }
+            }
+            $stmt->execute();
+        } else {
+            $stmt->execute($args);
+        }
         return $stmt;
     }
 
@@ -124,7 +133,7 @@ abstract class BaseModel
         return $this->run($sql, $args)->fetch($fetchMode);
     }
 
-    
+
     /**
      * Gets the number of records contained in the obtained result set.
      * 

@@ -2,27 +2,31 @@
 
 This repository contains an application skeleton for creating REST-based Web services. The latest version of the [**Slim micro framework**](https://www.slimframework.com/) is being used.
 
-## Using this Template: Deployment Instructions
+## How Do I Use/Deploy this Template?
 
-1. Download the content of this repository as .zip file.
-2. Extract the slim-template-main.zip file locally.
+Follow the instructions below in the specified order:
+
+1. Download this repository as `.zip` file.
+2. Extract the downloaded `slim-template-main.zip` file locally.
 3. Copy the `slim-template-main` folder into your Web server's **document root** (that is, `htdocs`)
-4. Rename the `slim-template-main` folder to `[project_name]-api`. For example, `films-api`
+4. Rename the `slim-template-main` folder to `[project_name]-api`. For example, `worldcup-api`
 5. Open your `[project_name]-api` folder in VS Code
-6. In the `.htaccess` file, change the specified subdirectory that is assigned to the `RewriteBase` directive.  The name of the subdirectory must be the same as the one you chose in Step 4). For example, change from `RewriteBase /slim-template` to  `RewriteBase /films-api`
+6. In the `.htaccess` file, change the specified subdirectory that is assigned to the `RewriteBase` directive.  The name of the subdirectory must be the same as the one you chose in Step 4). For example, change from `RewriteBase /slim-template` to  `RewriteBase /worldcup-api`
 7. In `index.php`, change the applications's base path directory from  `$app->setBasePath("/slim-template");` to `$app->setBasePath("/[project_name]-api");` where `[project_name]` is the name of the subdirectory you chose in Step 4).
-8. Open a VS Code terminal window: hit `` Ctrl+` ``
-9. Run the following command to install or update the required dependencies
+8. Run the following command to install or update the required dependencies in a VS Code terminal window (hit ``` Ctrl+` ```)
 
 ```bat
 composer.bat update
 ```
 
-**NOTE:** You can always clone this repository. However, you need to remove the ```.git``` ***hidden*** directory before you copy this template over to ```htdocs```
+**```NOTE:```** You can always clone this repository. However, if you do, you need to remove the ```.git``` ***hidden*** directory before you copy this template over to ```htdocs```
 
-## MySQL Database Connection Settings
+## How Do I Connect to a Database?
 
-In `app/config/app_config.php`, change the value of DB_NAME constant to reflect the name of the database you want to connect to. You may also want to change the database connection credentials in that file.
+The database credentials info are stored in `app/config/app_config.php`.
+
+* Change the value of DB_NAME constant to reflect the name of the database to be used by your slim app.
+* You may also want to change the database connection credentials in that file.
 
 ## Dependencies
 
@@ -38,9 +42,10 @@ The following dependencies have been already added to this template.
 
 Optional: you can use `composer` to either update the referenced dependencies or add additional ones based on your implementation's requirements.
 
-## Recommended VS Code Extensions for Web Development
+## VS Code Extensions
 
 ---
+Listed below are recommended VS Code extensions for Web development. However, most of them are already  included in `.vscode/extensions.json`
 
 ### PHP, HTML, and JavaScript
 
