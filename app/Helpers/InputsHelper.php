@@ -18,7 +18,7 @@ class InputsHelper
      * @param mixed $value the string to be validated
      * @return mixed false if the value is invalid. Otherwise, the sanitized string will be returned. 
      */
-    public static function isAlpha($value)
+    public static function isAlpha($value): mixed
     {
         $value = filter_var(trim($value), FILTER_SANITIZE_ADD_SLASHES);
         if (ctype_alpha($value)) {
@@ -28,13 +28,13 @@ class InputsHelper
     }
 
     /**
-     * Checks whether a value is int and is within a range.
-     * @param mixed $value
-     * @param int $min
-     * @param int $max
+     * Checks whether a value is an integer and is within a range.
+     * @param mixed $value an input value to be validated
+     * @param int $min the lower bound of the range of allowed values
+     * @param int $max the upper bound of the range of allowed values
      * @return bool|array
      */
-    public static function isIntInRange($value, int $min, int $max)
+    public static function isIntAndInRange($value, int $min, int $max): mixed
     {
         return filter_var($value, FILTER_VALIDATE_INT, static::getRangeOptions($min, $max));
     }
@@ -43,7 +43,7 @@ class InputsHelper
     /**
      * Checks whether a value is a valid integer and is greater than
      * the specified value. 
-     * @param mixed $input
+     * @param mixed $input an input value to be validated
      * @return mixed bool|array
      */
     public static function isInt($input, int $min = -1): mixed

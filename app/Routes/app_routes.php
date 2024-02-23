@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -14,12 +16,12 @@ global $app;
 //! The Vanier\Api must be used as namespace prefix. 
 
 //* ROUTE: GET /
-$app->get('/', [AboutController::class, 'handleAboutWebService']); 
+$app->get('/', [AboutController::class, 'handleAboutWebService']);
 
 //* ROUTE: GET /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
 
-    $now = DateTimeHelper::getDateAndTime(DateTimeHelper::D_M_Y);        
-    $response->getBody()->write("Reporting! Hello there! The current time is: ".$now);            
+    $now = DateTimeHelper::getDateAndTime(DateTimeHelper::D_M_Y);
+    $response->getBody()->write("Reporting! Hello there! The current time is: " . $now);
     return $response;
 });

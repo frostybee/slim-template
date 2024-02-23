@@ -1,12 +1,16 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Vanier\Api\Helpers;
+
 /**
  * Provides an offset-based pagination service. 
  *
  * @author Sleiman Rabah
  */
-class PaginationHelper {
+class PaginationHelper
+{
 
     /**
      * The index of the current page.
@@ -37,12 +41,13 @@ class PaginationHelper {
      * Configures a Paginator instance with the provided parameters.
      *  
      * @param int $page_number  the page number to be selected.
-     * @param int $per_page  the size of the page.
-     * @param int $total_count the total number of records in the result set.
+     * @param int $page_size   the number of records to fit in one page.
+     * @param int $total_count the total number of records in a result set to be paginated.
      */
-    public function __construct(int $page_number = 1, int $per_page = 10, int $total_count = 0) {
+    public function __construct(int $page_number = 1, int $page_size = 10, int $total_count = 0)
+    {
         $this->current_page = $page_number;
-        $this->records_per_page = $per_page;
+        $this->records_per_page = $page_size;
         $this->total_records = $total_count;
         $this->total_pages = $this->getTotalPages();
         // Set the current page to 1 if the current page is negative 
@@ -58,7 +63,8 @@ class PaginationHelper {
      * the result set to the client.
      * @return int 
      */
-    public function getOffset(): int {
+    public function getOffset(): int
+    {
         // 
         return ($this->current_page - 1) * $this->records_per_page;
     }
@@ -67,7 +73,8 @@ class PaginationHelper {
      * Returns the total number of records contained in the result set.
      * @return int
      */
-    public function getTotalRecords(): int {
+    public function getTotalRecords(): int
+    {
         return $this->total_records;
     }
 
@@ -75,7 +82,8 @@ class PaginationHelper {
      * Computes how many pages there will be in the result set. 
      * @return int the computed number of pages.
      */
-    public function getTotalPages(): int {
+    public function getTotalPages(): int
+    {
         if (!empty($this->total_records)) {
             // Calculate the total number of pages.
             return (int) ceil($this->total_records / $this->records_per_page);
@@ -89,8 +97,9 @@ class PaginationHelper {
      * 
      * @return array containing information about the produced pages.
      */
-    public function getPaginationInfo() {
-        return Array(
+    public function getPaginationInfo(): array
+    {
+        return array(
             "count" => $this->total_records,
             "offset" => $this->getOffset(),
             "page" => $this->current_page,

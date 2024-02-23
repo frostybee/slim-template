@@ -142,7 +142,7 @@ abstract class BaseModel
      * @param  object $fetchMode set return mode ie object or array
      * @return integer           returns number of records
      */
-    protected function count($sql, $args = [])
+    protected function count($sql, $args = []) : int
     {
         return $this->run($sql, $args)->rowCount();
     }

@@ -48,7 +48,7 @@ class DateTimeHelper
      * @see: https://www.php.net/manual/en/timezones.america.php 
      * @return string the current date and time for the specified time zone.
      */
-    public static function getDateAndTime(string $format, string $time_zone = 'America/Toronto')
+    public static function getDateAndTime(string $format, string $time_zone = 'America/Toronto') : string
     {
         $datetime = new DateTime('now', new DateTimeZone($time_zone));
         return $datetime->format($format);
