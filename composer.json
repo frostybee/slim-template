@@ -7,16 +7,19 @@
             "Vanier\\Api\\": "app/"
         }
     },
-    "authors": [{
-        "name": "Put your name here",
-        "email": "oi@oi.com"
-    }],
+    "authors": [
+        {
+            "name": "Put your name here",
+            "email": "oi@oi.com"
+        }
+    ],
     "require": {
-        "slim/slim": "^4.8",
-        "guzzlehttp/guzzle": "^7.5",
-        "vlucas/phpdotenv": "^5.5",
-        "firebase/php-jwt": "^6.3",
+        "slim/slim": "^4.13",
+        "guzzlehttp/guzzle": "^7.8",
+        "vlucas/phpdotenv": "^5.6",
+        "firebase/php-jwt": "^6.10",
         "monolog/monolog": "^2.9",
-        "slim/psr7": "^1.4"
+        "nyholm/psr7": "^1.8",
+        "nyholm/psr7-server": "^1.1"
     }
 }
