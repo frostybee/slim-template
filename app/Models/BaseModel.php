@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Vanier\Api\Models;
+namespace App\Models;
 
+use App\Helpers\AppSettings;
+use App\Services\PDOService;
 use PDO;
 use Exception;
-use Vanier\Api\Helpers\PaginationHelper;
 
 /**
  * A wrapper class for the PDO MySQL API.
@@ -18,7 +19,7 @@ abstract class BaseModel
     /**
      * holds a handle to a database connection.
      */
-    private $db;
+    private ?PDO $db = null;
 
     /**
      * The index of the current page.
@@ -34,45 +35,13 @@ abstract class BaseModel
 
     /**
      * Instantiates the BaseModel.
-     * @global array $db_config    database connection options.
+     * @global array $settings    database connection options.
      * @param array $options        Optional array of PDO options
-     * @throws Exception 
+     * @throws Exception
      */
-    public function __construct($options = [])
+    public function __construct(PDOService $pdo)
     {
-        // Global array defined in includes/app_constants.php
-        global $db_config;
-        if (!isset($db_config['database'])) {
-            throw new Exception('&args[\'database\'] is required');
-        }
-
-        if (!isset($db_config['username'])) {
-            throw new Exception('&args[\'username\']  is required');
-        }
-        $default_options = [
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        ];
-        $options = array_replace($default_options, $options);
-
-        $host = $db_config['host'] ?? 'localhost';
-        $charset = $db_config['charset'] ?? 'utf8mb4';
-        $port = isset($db_config['port']) ? 'port=' . $db_config['port'] . ';' : '';
-        $password = $db_config['password'] ?? '';
-        $database = $db_config['database'];
-        $username = $db_config['username'];
-
-        $dsn = "mysql:host=$host;dbname=$database;port=$port;charset=utf8mb4";
-        try {
-            $this->db = new PDO($dsn, $username, $password, $options);
-            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->db->query("SET NAMES utf8mb4");
-            // Set the connection's character set.
-            $this->db->query("SET NAMES $charset");
-        } catch (\PDOException $e) {
-            throw new \PDOException($e->getMessage(), (int)$e->getCode());
-        }
+        $this->db = $pdo->getPDO();
     }
 
     /**
@@ -107,22 +76,22 @@ abstract class BaseModel
 
     /**
      * Executes the provided query.
-     * 
+     *
      * @param  string $sql       sql query
      * @param  array  $args      filtering options that can be added to the query.
      * @param  object $fetchMode set return mode ie object or array
      * @return object            returns an array containing the selected records.
      */
-    protected function fetchAll($sql, $args = [], $fetchMode = PDO::FETCH_ASSOC)
+    protected function fetchAll($sql, $args = [], $fetchMode = PDO::FETCH_ASSOC): array
     {
-        return $this->run($sql, $args)->fetchAll($fetchMode);
+        return (array)$this->run($sql, $args)->fetchAll($fetchMode);
     }
 
     /**
      * Finds a record matching the provided filtering options.
-     * Can execute a query that joins two or more tables. 
+     * Can execute a query that joins two or more tables.
      * Should be used to fetch a single record from a table.
-     * 
+     *
      * @param  string $sql       sql query
      * @param  array  $args      filtering options that will be appended to the WHERE clause.
      * @param  object $fetchMode set return mode ie object or array
@@ -136,13 +105,13 @@ abstract class BaseModel
 
     /**
      * Gets the number of records contained in the obtained result set.
-     * 
+     *
      * @param  string $sql       sql query
-     * @param  array  $args      filtering options. 
+     * @param  array  $args      filtering options.
      * @param  object $fetchMode set return mode ie object or array
      * @return integer           returns number of records
      */
-    protected function count($sql, $args = []) : int
+    protected function count($sql, $args = []): int
     {
         return $this->run($sql, $args)->rowCount();
     }
@@ -158,7 +127,7 @@ abstract class BaseModel
 
     /**
      * Inserts a new record into the specified table.
-     * 
+     *
      * @param  string $table the table name where the new data should be inserted.
      * @param  array $data  an associative array of column names (fields) and values.
      *              For example, ["username"=>"frostybee", "email" =>"frostybee@me.com"]
@@ -185,7 +154,7 @@ abstract class BaseModel
 
     /**
      * updates one or more records contained in the specified table.
-     * 
+     *
      * @param  string $table table name
      * @param  array $data  an array containing the names of the field(s) to be updated along with the new value(s).
      *                      For example, ["username"=>"frostybee", "email" =>"frostybee@me.com"]
@@ -207,7 +176,7 @@ abstract class BaseModel
         }
         $fieldDetails = rtrim($fieldDetails, ',');
 
-        //setup where 
+        //setup where
         $whereDetails = null;
         $i = 0;
         foreach ($where as $key => $value) {
@@ -222,10 +191,10 @@ abstract class BaseModel
 
     /**
      * Deletes one or more records.
-     * 
+     *
      * @param  string $table table name
-     * @param  array $where an array containing the filtering operation. 
-     * Note that those operations will eb appeNded to the WHERE Clause of the DELETE query. 
+     * @param  array $where an array containing the filtering operation.
+     * Note that those operations will eb appeNded to the WHERE Clause of the DELETE query.
      * @param  integer $limit limit number of records
      */
     protected function delete($table, $where, $limit = 1)
@@ -233,7 +202,7 @@ abstract class BaseModel
         //collect the values from collection
         $values = array_values($where);
 
-        //setup where 
+        //setup where
         $whereDetails = null;
         $i = 0;
         foreach ($where as $key => $value) {

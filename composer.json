@@ -1,25 +1,29 @@
 {
-    "name": "vanier/api",
-    "description": "A Slim-based application skeleton",
-    "type": "project",
-    "autoload": {
-        "psr-4": {
-            "Vanier\\Api\\": "app/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Put your name here",
-            "email": "oi@oi.com"
-        }
-    ],
-    "require": {
-        "slim/slim": "^4.13",
-        "guzzlehttp/guzzle": "^7.8",
-        "vlucas/phpdotenv": "^5.6",
-        "firebase/php-jwt": "^6.10",
-        "monolog/monolog": "^2.9",
-        "nyholm/psr7": "^1.8",
-        "nyholm/psr7-server": "^1.1"
+  "name": "frostybee/slim-api-skeleton",
+  "description": "A Slim framework skeleton for implementing REST-based Web services.",
+  "type": "project",
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
     }
+  },
+  "authors": [
+    {
+      "name": "FrostyBee",
+      "homepage": "https://github.com/frostybee",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "slim/slim": "^4.13",
+    "guzzlehttp/guzzle": "^7.8",
+    "vlucas/phpdotenv": "^5.6",
+    "php-di/php-di": "^6.4",
+    "firebase/php-jwt": "^6.10",
+    "fig/http-message-util": "^1.1",
+    "monolog/monolog": "^2.9",
+    "nyholm/psr7": "^1.8",
+    "nyholm/psr7-server": "^1.1"
+  }
 }
