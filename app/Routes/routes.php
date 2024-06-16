@@ -15,7 +15,7 @@ return static function (Slim\App $app): void {
     //* ROUTE: GET /
     $app->get('/', [AboutController::class, 'handleAboutWebService']);
     //* ROUTE: GET /hello
-    $app->get('/hello', function (Request $request, Response $response, $args) {
+    $app->get('/ping', function (Request $request, Response $response, $args) {
 
         $now = DateTimeHelper::now(DateTimeHelper::D_M_Y);
         $response->getBody()->write("Reporting! Hello there! The current time is: " . $now);

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Vanier\Api\Helpers;
+namespace App\Helpers;
 
 
 /**
- * A helper class that exposes various data validation functions. 
+ * A helper class that exposes various data validation functions.
  * @author frostybee
  */
 class InputsHelper
@@ -14,9 +14,9 @@ class InputsHelper
 
 
     /**
-     * Checks whether a string contains only alphabetic characters. 
+     * Checks whether a string contains only alphabetic characters.
      * @param mixed $value the string to be validated
-     * @return mixed false if the value is invalid. Otherwise, the sanitized string will be returned. 
+     * @return mixed false if the value is invalid. Otherwise, the sanitized string will be returned.
      */
     public static function isAlpha($value): mixed
     {
@@ -42,7 +42,7 @@ class InputsHelper
 
     /**
      * Checks whether a value is a valid integer and is greater than
-     * the specified value. 
+     * the specified value.
      * @param mixed $input an input value to be validated
      * @return mixed bool|array
      */
@@ -67,10 +67,10 @@ class InputsHelper
     }
 
     /**
-     * Determines whether an array is associative or not.     
-     * 
+     * Determines whether an array is associative or not.
+     *
      * An array is "associative" if it doesn't have sequential numerical keys beginning with zero.
-     * Note that an array in PHP can be either sequential or associative. 
+     * Note that an array in PHP can be either sequential or associative.
      *
      * @param  array  $array the array to be verified.
      * @return bool

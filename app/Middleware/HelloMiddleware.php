@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Vanier\Api\Middleware;
+namespace App\Middleware;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
@@ -13,8 +13,8 @@ class HelloMiddleware implements MiddlewareInterface
     {
         //echo "Hello! From test middleware!";exit;
 
-        //! DO NOT remove or change the following statements. 
+        //! DO NOT remove or change the following statements.
         $response = $handler->handle($request);
         return $response;
-    }    
+    }
 }

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Vanier\Api\Helpers;
+namespace App\Helpers;
 
 /**
  * Validation Class
@@ -9,7 +9,7 @@ namespace Vanier\Api\Helpers;
  *
  * @package Valitron
  * @author  Vance Lucas <vance@vancelucas.com>
- * @link    http://www.vancelucas.com/ 
+ * @link    http://www.vancelucas.com/
  * @see:https://github.com/vlucas/valitron
  */
 class Validator
@@ -61,7 +61,7 @@ class Validator
     protected static $_lang;
 
     /**
-     * The directory containing the error message translation files. 
+     * The directory containing the error message translation files.
      * @var string
      */
     protected static $_langDir = 'lang/';
