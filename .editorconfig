@@ -1,5 +1,7 @@
 # This file is for unifying the coding style for different editors and IDEs.
 # EditorConfig is awesome: https://EditorConfig.org
+# To install EditorConfig extension for VS Code:
+# @link: https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig
 
 # Top-most EditorConfig file
 root = true

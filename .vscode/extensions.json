@@ -20,6 +20,7 @@
         "enkia.tokyo-night",
         "vscode-icons-team.vscode-icons",
         "esbenp.prettier-vscode",
-        "yzane.markdown-pdf"
+        "yzane.markdown-pdf",
+        "editorconfig.editorconfig"
     ]
 }

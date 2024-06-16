@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Services\PDOService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 abstract class BaseController
 {
+    protected PDOService $pdo;
+    public function __construct(PDOService $pdo)
+    {
+        $this->pdo = $pdo;
+    }
     protected function makeResponse(Response $response, array $data, int $status_code = 200): Response
     {
         // var_dump($data);

@@ -14,7 +14,7 @@ return static function (Slim\App $app): void {
     // Admin routes
     //* ROUTE: GET /
     $app->get('/', [AboutController::class, 'handleAboutWebService']);
-    //* ROUTE: GET /hello
+    //* ROUTE: GET /ping
     $app->get('/ping', function (Request $request, Response $response, $args) {
 
         $now = DateTimeHelper::now(DateTimeHelper::D_M_Y);
