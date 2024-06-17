@@ -22,6 +22,6 @@ class AboutController extends BaseController
             'authors' => 'FrostyBee',
             'resources' => '/blah'
         );
-        return $this->makeResponse($response, $data);
+        return $this->respondWithJson($response, $data);
     }
 }

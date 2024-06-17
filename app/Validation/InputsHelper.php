@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Helpers;
-
+namespace App\Validation;
 
 /**
  * A helper class that exposes various data validation functions.

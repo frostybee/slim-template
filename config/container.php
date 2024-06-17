@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Helpers\AppSettings;
+use App\Core\AppSettings;
 use App\Services\PDOService;
 use DI\ContainerBuilder;
 use Nyholm\Psr7\Factory\Psr17Factory;

@@ -15,7 +15,7 @@ abstract class BaseController
     {
         $this->pdo = $pdo;
     }
-    protected function makeResponse(Response $response, array $data, int $status_code = 200): Response
+    protected function respondWithJson(Response $response, array $data, int $status_code = 200): Response
     {
         // var_dump($data);
         $json_data = json_encode($data);
