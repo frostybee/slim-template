@@ -30,9 +30,9 @@ class Result
      *
      * @var mixed
      */
-    private $data;
+    private mixed $data;
 
-    public function __construct(bool $success, string $message, $data = null)
+    public function __construct(bool $success, string $message, mixed $data = null)
     {
         $this->success = $success;
         $this->message = $message;

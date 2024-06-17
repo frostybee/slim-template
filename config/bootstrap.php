@@ -2,17 +2,25 @@
 
 declare(strict_types=1);
 
+use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
+use Slim\App;
 
 require realpath(__DIR__ . '/../vendor/autoload.php');
 
-// Load the app's global constants.
-require_once realpath(__DIR__ . '/constants.php');
-
 // Configure the DI container and load dependencies.
-$container = require realpath(__DIR__ . '/container.php');
+$definitions = require realpath(__DIR__ . '/container.php');
 
-AppFactory::setContainer($container);
+// Build DI container instance
+$container = (new ContainerBuilder())
+    ->addDefinitions($definitions)
+    ->build();
+
+// Create App instance
+return $container->get(App::class);
+
+
+/* AppFactory::setContainer($container);
 $app = AppFactory::create();
 
 // You might also need to change it in .htaccess
@@ -31,3 +39,4 @@ $app->setBasePath('/' . APP_ROOT_DIR_NAME);
 
 // Run the app.
 $app->run();
+ */
