@@ -15,10 +15,11 @@ class HomeActionTest extends TestCase
 {
     use AppTestTrait;
 
-    private $apiBaseDir = '/slim-template';
+    //private $apiBaseDir = APP_ROOT_DIR;
     public function testPing(): void
     {
-        $request = $this->createRequest('GET', '/slim-template/ping');
+        $resource_path  = '/'.APP_ROOT_DIR.'/ping';
+        $request = $this->createRequest('GET', $resource_path);
         $response = $this->app->handle($request);
 
         $this->assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
@@ -27,7 +28,8 @@ class HomeActionTest extends TestCase
 
     public function testPageNotFound(): void
     {
-        $request = $this->createRequest('GET', '/oi');
+        $resource_path  = '/'.APP_ROOT_DIR.'/oi';
+        $request = $this->createRequest('GET', $resource_path);
         $response = $this->app->handle($request);
 
         $this->assertSame(StatusCodeInterface::STATUS_NOT_FOUND, $response->getStatusCode());

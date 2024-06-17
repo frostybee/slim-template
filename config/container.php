@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Core\AppSettings;
 use App\Core\Services\PDOService;
-use DI\ContainerBuilder;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -16,8 +15,9 @@ use Slim\App;
 use Slim\Interfaces\RouteParserInterface;
 
 // Declare the path of the application's root directory.
-define('APP_ROOT_DIR', dirname(__DIR__));
-define('APP_ROOT_DIR_NAME', basename(dirname(__FILE__, 2)));
+define('APP_BASE_PATH', dirname(__DIR__));
+define('APP_ROOT_DIR', basename(dirname(__FILE__, 2)));
+
 // Load the app's global constants.
 require_once realpath(__DIR__ . '/constants.php');
 
@@ -28,9 +28,10 @@ $definitions = [
         );
     },
     App::class => function (ContainerInterface $container) {
+
         $app = AppFactory::createFromContainer($container);
-        $app->setBasePath('/' . APP_ROOT_DIR_NAME);
-        $app->setBasePath('/slim-template');
+        //$app->setBasePath('/slim-template');
+        $app->setBasePath('/' . APP_ROOT_DIR);
 
         // Register routes
         (require_once realpath(__DIR__ . '/../app/Routes/routes.php'))($app);
