@@ -26,6 +26,14 @@ The database credentials info are stored in `app/config/app_config.php`.
 * Change the value of DB_NAME constant to reflect the name of the database to be used by your slim app.
 * You may also want to change the database connection credentials in that file.
 
+## On Using Environment Variables
+
+Do not use `.env` files for storing environment specific application settings/configurations. Dotenv [is not meant to be used in production](https://github.com/vlucas/phpdotenv/issues/76#issuecomment-87252126)
+
+Just Google: "DB_PASSWORD" filetype:env [Google](https://www.google.ch/search?q=%22DB_PASSWORD%22+filetype:env)
+
+Instead, follow the instructions that are detailed in [config/env.example.php](config/env.example.php)
+
 ## Dependencies
 
 ---
