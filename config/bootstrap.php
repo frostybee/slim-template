@@ -16,6 +16,11 @@ AppFactory::setContainer($container);
 $app = AppFactory::create();
 
 // You might also need to change it in .htaccess
+//NOTE: If running DOCKER: htdocs
+// Set the base path to:
+//$app->setBasePath('/htdocs');
+//call phpinfo(); then check the value of the DOCUMENT_ROOT property.
+
 $app->setBasePath('/' . APP_ROOT_DIR_NAME);
 
 // Register routes

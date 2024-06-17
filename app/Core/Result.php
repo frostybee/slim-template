@@ -4,7 +4,7 @@ namespace App\Core;
 
 /**
  * Provides an implementation of the Result pattern.
- * This class encapsulates the result of an operation.
+ * It encapsulates the result of an operation.
  */
 class Result
 {

@@ -4,5 +4,5 @@ declare(strict_types=1);
 
 // Declare the path of the application's root directory.
 define('APP_ROOT_DIR', dirname(__DIR__));
-define('APP_ROOT_DIR_NAME', basename(dirname(dirname(__FILE__))));
+define('APP_ROOT_DIR_NAME', basename(dirname(__FILE__, 2) ));
 require_once realpath(__DIR__.'/../config/bootstrap.php');

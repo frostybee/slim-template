@@ -11,9 +11,7 @@ Follow the instructions below in the specified order:
 3. Copy the `slim-template-main` folder into your Web server's **document root** (that is, `htdocs`)
 4. Rename the `slim-template-main` folder to `[project_name]-api`. For example, `worldcup-api`
 5. Open your `[project_name]-api` folder in VS Code
-6. In the `.htaccess` file, change the specified subdirectory that is assigned to the `RewriteBase` directive.  The name of the subdirectory must be the same as the one you chose in Step 4). For example, change from `RewriteBase /slim-template` to  `RewriteBase /worldcup-api`
-7. In `index.php`, change the applications's base path directory from  `$app->setBasePath("/slim-template");` to `$app->setBasePath("/[project_name]-api");` where `[project_name]` is the name of the subdirectory you chose in Step 4).
-8. Run the following command to install or update the required dependencies in a VS Code terminal window (hit ``` Ctrl+` ```)
+8. Open a terminal window in VS Code (hit ``` Ctrl+` ```), and run the following command to install or update the required dependencies in a VS Code terminal window (hit ``` Ctrl+` ```)
 
 ```bat
 composer.bat update

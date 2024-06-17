@@ -10,10 +10,15 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class AboutController extends BaseController
 {
+    private const API_NAME = 'YOUR_PROJECT_NAME';
+
+    private const API_VERSION = '1.0.0';
+
     public function handleAboutWebService(Request $request, Response $response): Response
     {
         $data = array(
-            'about' => 'Welcome! This is a Web service that provides this and that...',
+            'api' => self::API_NAME,
+            'about' => 'Welcome! This i a Web service that provides this and that...',
             'authors' => 'FrostyBee',
             'resources' => '/blah'
         );
