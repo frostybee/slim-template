@@ -21,6 +21,9 @@
         "vscode-icons-team.vscode-icons",
         "esbenp.prettier-vscode",
         "yzane.markdown-pdf",
-        "editorconfig.editorconfig"
+        "editorconfig.editorconfig",
+        "rexshi.phpdoc-comment-vscode-plugin",
+        "entuent.fira-code-nerd-font",
+        "ecmel.vscode-html-css"
     ]
 }
