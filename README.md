@@ -46,6 +46,12 @@ Below are keybindings that speeds up the insertion of special characters and key
     "when": "editorTextFocus"
   },
   {
+    "key": "alt+shift+i",
+    "command": "type",
+    "args": { "text": "[" },
+    "when": "editorTextFocus"
+  },
+  {
     "key": "alt+shift+h",
     "command": "type",
     "args": { "text": "<?php" },
