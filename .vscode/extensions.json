@@ -24,6 +24,7 @@
     "editorconfig.editorconfig",
     "entuent.fira-code-nerd-font",
     "ecmel.vscode-html-css",
-    "neilbrayfield.php-docblocker"
+    "neilbrayfield.php-docblocker",
+    "alefragnani.bookmarks"
   ]
 }
