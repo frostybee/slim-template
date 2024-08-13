@@ -8,7 +8,7 @@ use Slim\App;
 
 require realpath(__DIR__ . '/../vendor/autoload.php');
 
-require realpath(__DIR__ . '/config/functions.php');
+require realpath(__DIR__ . '/functions.php');
 
 // Configure the DI container and load dependencies.
 $definitions = require realpath(__DIR__ . '/container.php');

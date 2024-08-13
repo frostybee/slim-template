@@ -84,7 +84,7 @@ abstract class BaseModel
      */
     protected function fetchAll($sql, $args = [], $fetchMode = PDO::FETCH_ASSOC): array
     {
-        return (array)$this->run($sql, $args)->fetchAll($fetchMode);
+        return (array) $this->run($sql, $args)->fetchAll($fetchMode);
     }
 
     /**

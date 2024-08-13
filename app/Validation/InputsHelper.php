@@ -41,7 +41,7 @@ class InputsHelper
 
     /**
      * Checks whether a value is a valid integer and is greater than
-     * the specified value.
+     * the specified min value.
      * @param mixed $input an input value to be validated
      * @return mixed bool|array
      */
