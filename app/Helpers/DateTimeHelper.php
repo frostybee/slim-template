@@ -62,4 +62,8 @@ class DateTimeHelper
         $datetime = new DateTime('now', new DateTimeZone($time_zone));
         return $datetime->format($format);
     }
+    public static function nowForDb(): string
+    {
+        return self::now(self::Y_M_D_H_M);
+    }
 }

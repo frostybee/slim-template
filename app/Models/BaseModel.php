@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Core\Services\PDOService;
 use App\Helpers\AppSettings;
-use App\Services\PDOService;
 use PDO;
 use Exception;
 

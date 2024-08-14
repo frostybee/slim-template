@@ -37,7 +37,6 @@
     "ext-json": "*",
     "slim/slim": "^4.13",
     "guzzlehttp/guzzle": "^7.8",
-    "vlucas/phpdotenv": "^5.6",
     "php-di/php-di": "^6.4",
     "firebase/php-jwt": "^6.10",
     "fig/http-message-util": "^1.1",

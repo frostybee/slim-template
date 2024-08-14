@@ -2,9 +2,10 @@
 
 namespace App\Core;
 
+
 /**
  * Provides an implementation of the Result pattern.
- * It encapsulates the result of an operation.
+ * This class encapsulates the result of an operation.
  */
 class Result
 {
@@ -30,9 +31,9 @@ class Result
      *
      * @var mixed
      */
-    private mixed $data;
+    private $data;
 
-    public function __construct(bool $success, string $message, mixed $data = null)
+    public function __construct(bool $success, string $message, $data = null)
     {
         $this->success = $success;
         $this->message = $message;

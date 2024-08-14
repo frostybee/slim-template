@@ -11,7 +11,6 @@ namespace App\Helpers;
  */
 class PaginationHelper
 {
-
     /**
      * The index of the current page.
      * @var int
