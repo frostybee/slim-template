@@ -1,6 +1,6 @@
-# Slim-Based Application Skeleton
+# Starter Template
 
-This repository contains an application skeleton for creating REST-based Web services. The latest version of the [**Slim micro framework**](https://www.slimframework.com/) is being used.
+This repository contains an application skeleton for creating REST-based Web services using the latest version of the [**Slim micro framework**](https://www.slimframework.com/).
 
 ## How Do I Use/Deploy this Template?
 

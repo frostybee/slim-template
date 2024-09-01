@@ -2,6 +2,9 @@
 
 namespace App\Core;
 
+/**
+ * Stores application-level settings.
+ */
 class AppSettings
 {
     private array $settings;

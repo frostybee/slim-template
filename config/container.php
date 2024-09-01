@@ -14,10 +14,6 @@ use Slim\Factory\AppFactory;
 use Slim\App;
 use Slim\Interfaces\RouteParserInterface;
 
-// Declare the path of the application's root directory.
-define('APP_BASE_PATH', dirname(__DIR__));
-define('APP_ROOT_DIR', basename(dirname(__FILE__, 2)));
-
 $definitions = [
     AppSettings::class => function () {
         return new AppSettings(

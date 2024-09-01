@@ -9,7 +9,7 @@ use PDO;
 use Exception;
 
 /**
- * A wrapper class for the PDO MySQL API.
+ * A wrapper class for interacting with a MySQL DB using the PDO API.
  * This class can be extended for further customization.
  */
 abstract class BaseModel
@@ -33,10 +33,10 @@ abstract class BaseModel
     private $records_per_page = 5;
 
     /**
-     * Instantiates the BaseModel.
-     * @global array $settings    database connection options.
-     * @param array $options        Optional array of PDO options
-     * @throws Exception
+     * Instantiates the PDO wrapper.
+     *
+     * @param PDOService $pdo A helper object that contains the
+     *                        established DB connection.
      */
     public function __construct(PDOService $pdo)
     {

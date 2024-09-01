@@ -9,7 +9,6 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 abstract class BaseController
 {
-    protected PDOService $pdo;
     public function __construct()
     {
     }
