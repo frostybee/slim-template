@@ -14,7 +14,6 @@ class TestController extends BaseController
 
     }
 
-
     public function handleTest(Request $request, Response $response): Response
     {
         $this->testModel->sayHello();

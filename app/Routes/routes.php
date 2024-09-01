@@ -21,8 +21,11 @@ return static function (Slim\App $app): void {
     //* ROUTE: GET /ping
     $app->get('/ping', function (Request $request, Response $response, $args) {
 
-        $now = DateTimeHelper::now(DateTimeHelper::Y_M_D_H_M);
-        $response->getBody()->write("Reporting! Hello there! The current time is: {$now}");
+        $payload = [
+            "greetings" => "Reporting! Hello there!",
+            "now" => DateTimeHelper::now(DateTimeHelper::Y_M_D_H_M),
+        ];
+        $response->getBody()->write(json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR));
         return $response;
     });
 };
