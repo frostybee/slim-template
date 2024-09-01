@@ -1,3 +1,3 @@
 # Database Documentation
 
-Put your `.sql` files here.
+Put your exported database schema (`.sql`) files here.

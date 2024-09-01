@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Detect environment
 //TODO: set the app environment based on the domaine name.
 // The APP_ENV value must be either prod or dev
 //$_ENV['APP_ENV'] = 'prod';

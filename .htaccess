@@ -2,7 +2,7 @@ RewriteEngine On
 # You might need to change the value of the path of the
 # the RewriteBase rule to specify the name of the sub directory.
 # Fro example:
-# RewriteBase /books-api
+# RewriteBase /worldcup-api
 RewriteRule ^$ public/ [L]
 RewriteRule (.*) public/$1 [L]
 

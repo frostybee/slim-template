@@ -15,7 +15,7 @@ class Result
      *
      * @var bool
      */
-    private bool $success = false;
+    private bool $is_success = false;
 
     /**
      * Holds the list of errors encountered while
@@ -35,7 +35,7 @@ class Result
 
     public function __construct(bool $success, string $message, $data = null)
     {
-        $this->success = $success;
+        $this->is_success = $success;
         $this->message = $message;
         $this->data = $data;
     }
@@ -51,12 +51,12 @@ class Result
 
     public function isSuccess(): bool
     {
-        return $this->success;
+        return $this->is_success;
     }
 
     public function isFailure(): bool
     {
-        return !$this->success;
+        return !$this->is_success;
     }
 
     public function getData(): mixed

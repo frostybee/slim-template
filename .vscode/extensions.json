@@ -4,9 +4,7 @@
     "streetsidesoftware.code-spell-checker",
     "dbaeumer.vscode-eslint",
     "evondev.dracula-high-contrast",
-    "sidthesloth.html5-boilerplate",
     "htmlhint.vscode-htmlhint",
-    "idleberg.icon-fonts",
     "xabikos.javascriptsnippets",
     "yzhang.markdown-all-in-one",
     "bierner.markdown-preview-github-styles",
@@ -15,7 +13,6 @@
     "christian-kohler.path-intellisense",
     "devsense.phptools-vscode",
     "jaguadoromero.vscode-php-create-class",
-    "xdebug.php-pack",
     "rangav.vscode-thunder-client",
     "enkia.tokyo-night",
     "vscode-icons-team.vscode-icons",
@@ -24,6 +21,7 @@
     "editorconfig.editorconfig",
     "ecmel.vscode-html-css",
     "neilbrayfield.php-docblocker",
-    "alefragnani.bookmarks"
+    "alefragnani.bookmarks",
+    "bmewburn.vscode-intelephense-client"
   ]
 }

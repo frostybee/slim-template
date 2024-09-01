@@ -19,7 +19,7 @@ return static function (Slim\App $app): void {
     $app->get('/ping', function (Request $request, Response $response, $args) {
 
         $now = DateTimeHelper::now(DateTimeHelper::Y_M_D_H_M);
-        $response->getBody()->write("Reporting! Hello there! The current time is: " . $now);
+        $response->getBody()->write("Reporting! Hello there! The current time is: {$now}");
         return $response;
     });
 };

@@ -18,9 +18,6 @@ use Slim\Interfaces\RouteParserInterface;
 define('APP_BASE_PATH', dirname(__DIR__));
 define('APP_ROOT_DIR', basename(dirname(__FILE__, 2)));
 
-// Load the app's global constants.
-require_once realpath(__DIR__ . '/constants.php');
-
 $definitions = [
     AppSettings::class => function () {
         return new AppSettings(

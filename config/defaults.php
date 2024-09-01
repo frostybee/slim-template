@@ -1,6 +1,7 @@
 <?php
 
-// Application default settings
+// Application's default settings
+
 // Error reporting
 // Default settings: disable all error reporting for production.
 error_reporting(0);
