@@ -9,8 +9,12 @@ class TestModel  extends BaseModel
     public function __construct(PDOService $pdo)
     {
         parent::__construct($pdo);
+        //dd($pdo);
     }
     public function sayHello() : void {
-        echo  "Test";
+        $sql = "SELECT * FROM players";
+        dd(
+            $this->fetchAll($sql)
+        );
     }
 }

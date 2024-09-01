@@ -11,6 +11,7 @@ class TestController extends BaseController
 {
 
     public function __construct(private TestModel $testModel) {
+
     }
 
 
@@ -20,5 +21,4 @@ class TestController extends BaseController
 
         return $response;
     }
-
 }

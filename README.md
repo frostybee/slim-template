@@ -11,22 +11,21 @@ Follow the instructions below in the specified order:
 3. Copy the `slim-template-main` folder into your Web server's **document root** (that is, `htdocs`)
 4. Rename the `slim-template-main` folder to `[project_name]-api`. For example, `worldcup-api`
 5. Open your `[project_name]-api` folder in VS Code
-8. Open a terminal window in VS Code (hit ``` Ctrl+` ```), and run the following command to install or update the required dependencies in a VS Code terminal window (hit ``` Ctrl+` ```)
-
-```bat
-composer.bat update
-```
+6. Open a terminal window in VS Code (hit ``` Ctrl+` ```), and run `composer.bat update` command to install or update the required dependencies. Make sure that `Command Prompt` is selected (the dropdown menu in the upper-right corner).
+7. Adjust your database credentials, **see below**.
 
 **```NOTE:```** You can always clone this repository. However, if you do, you need to remove the ```.git``` ***hidden*** directory before you copy this template over to ```htdocs```
 
-## How Do I Connect to a Database?
+## How Do I Configure My Database Connection?
 
-The database credentials info are stored in `app/config/app_config.php`.
+Follow the outlined instructions in [config/env.example.php](config/env.example.php)
 
-* Change the value of DB_NAME constant to reflect the name of the database to be used by your slim app.
-* You may also want to change the database connection credentials in that file.
+* Change the value of the `database` variable to reflect the name of the database to be used by your slim app.
+* You may also want to change the connection credentials in that file.
 
 ## On Using Environment Variables
+
+Sensitive information used in app such as your database credentials, API key, etc. MUST not be pushed into your Git repo.
 
 Do not use `.env` files for storing environment specific application settings/configurations. Dotenv [is not meant to be used in production](https://github.com/vlucas/phpdotenv/issues/76#issuecomment-87252126)
 
@@ -83,17 +82,6 @@ Below are keybindings that speeds up the insertion of special characters and key
   }
   ```
 
-## Dependencies
-
-The following dependencies have been already added to this template.
-
-1. `slim/slim:"4.*"`
-2. `guzzlehttp/guzzle`
-3. `firebase/php-jwt`
-4. `monolog/monolog`
-
-Optional: you can use `composer` to either update the referenced dependencies or add additional ones based on your implementation's requirements.
-
 ## VS Code Extensions
 
 Listed below are recommended VS Code extensions for Web development. However, most of them are already  included in [.vscode/extensions.json](.vscode/extensions.json)
@@ -105,7 +93,6 @@ Listed below are recommended VS Code extensions for Web development. However, mo
 3. [GitLens — Git supercharged](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 4. [PHP IntelliSense](https://marketplace.visualstudio.com/items?itemName=zobo.php-intellisense)
 5. [PHP Intelephense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client)
-6. [PHP Debug](https://marketplace.visualstudio.com/items?itemName=xdebug.php-debug)
 7. [PHP Extension Pack](https://marketplace.visualstudio.com/items?itemName=xdebug.php-pack)
 8. [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 9. [JavaScript (ES6) code snippets](https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets)

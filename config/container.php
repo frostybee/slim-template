@@ -31,10 +31,10 @@ $definitions = [
         $app->setBasePath('/' . APP_ROOT_DIR);
 
         // Register routes
-        require_once realpath(__DIR__ . '/../app/Routes/routes.php')($app);
+        (require_once realpath(__DIR__ . '/../app/Routes/routes.php'))($app);
 
         // Register middleware
-        require_once realpath(__DIR__ . '/middleware.php')($app);
+        (require_once realpath(__DIR__ . '/middleware.php'))($app);
 
         return $app;
     },

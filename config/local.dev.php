@@ -19,7 +19,7 @@ return function (array $settings): array {
     $settings['error']['display_error_details'] = true;
 
     // Database
-    $settings['db']['database'] = 'nail_booking';
+    $settings['db']['database'] = 'worldcup';
     $settings['db']['hostname'] = 'localhost';
     $settings['db']['port'] = '3306';
 
