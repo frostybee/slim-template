@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Core\AppSettings;
-use App\Core\Services\PDOService;
+use App\Core\PDOService;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -31,10 +31,10 @@ $definitions = [
         $app->setBasePath('/' . APP_ROOT_DIR);
 
         // Register routes
-        (require_once realpath(__DIR__ . '/../app/Routes/routes.php'))($app);
+        require_once realpath(__DIR__ . '/../app/Routes/routes.php')($app);
 
         // Register middleware
-        (require_once realpath(__DIR__ . '/middleware.php'))($app);
+        require_once realpath(__DIR__ . '/middleware.php')($app);
 
         return $app;
     },

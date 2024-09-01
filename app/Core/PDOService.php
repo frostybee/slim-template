@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Services;
+namespace App\Core;
 
 use Exception;
 use PDO;
@@ -9,6 +9,7 @@ class PDOService
 {
     private PDO $db;
     private array $config = [];
+
 
     public function __construct(array $config)
     {

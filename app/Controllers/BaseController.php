@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Core\Services\PDOService;
+use App\Core\PDOService;
 use Psr\Http\Message\ResponseInterface as Response;
 
 abstract class BaseController
 {
     protected PDOService $pdo;
-    public function __construct(PDOService $pdo)
+    public function __construct()
     {
-        $this->pdo = $pdo;
     }
     protected function renderJson(Response $response, array $data, int $status_code = 200): Response
     {
