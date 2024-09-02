@@ -20,6 +20,5 @@ $definitions = require realpath(__DIR__ . '/container.php');
 $container = (new ContainerBuilder())
     ->addDefinitions($definitions)
     ->build();
-
 // Create App instance
 return $container->get(App::class);

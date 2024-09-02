@@ -1,4 +1,47 @@
 {
   "editor.fontLigatures": true,
-  "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace"
+  "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontWeight": "normal",
+  // Enable format on save
+  "editor.formatOnSave": true,
+  // Enable word wrap
+  "editor.wordWrap": "on",
+  // Enable code snippets and hover documentation
+  "editor.snippetSuggestions": "inline",
+  "editor.hover.enabled": true,
+
+  // Customize the appearance
+  "editor.fontSize": 20,
+  "editor.lineHeight": 25,
+  "editor.guides.bracketPairs": true,
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.cursorBlinking": "smooth",
+  // Behaviour
+  "editor.mouseWheelScrollSensitivity": 3,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "editor.minimap.enabled": false,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "explorer.compactFolders": false,
+  "breadcrumbs.showFunctions": true,
+
+  "composer.bin": "",
+  "git.path": "",
+  "composer.workingPath": "",
+  "editor.mouseWheelZoom": true,
+  "workbench.editor.enablePreview": false,
+  // Code formatting settings.
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[php]": {
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+  }
 }
