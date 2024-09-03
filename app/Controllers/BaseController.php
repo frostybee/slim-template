@@ -13,7 +13,7 @@ abstract class BaseController
     protected function renderJson(Response $response, array $data, int $status_code = 200): Response
     {
         // var_dump($data);
-        $json_data = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR);
+        $json_data = json_encode($data, JSON_UNESCAPED_SLASHES |    JSON_PARTIAL_OUTPUT_ON_ERROR);
         //-- Write JSON data into the response's body.
         $response->getBody()->write($json_data);
         return $response->withStatus($status_code)->withAddedHeader(HEADERS_CONTENT_TYPE, APP_MEDIA_TYPE_JSON);

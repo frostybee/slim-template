@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 //Settings for  Dev environment
 
 function myCustomErrorHandler(int $errNo, string $errMsg, string $file, int $line)

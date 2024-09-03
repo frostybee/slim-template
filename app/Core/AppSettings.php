@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core;
 
 /**
@@ -17,7 +19,7 @@ class AppSettings
     /**
      * @return mixed
      */
-    public function get(string $key = '') : mixed
+    public function get(string $key = ''): mixed
     {
         return (empty($key)) ? $this->settings : $this->settings[$key];
     }

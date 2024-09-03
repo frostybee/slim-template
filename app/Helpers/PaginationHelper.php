@@ -18,7 +18,7 @@ class PaginationHelper
     private $current_page;
 
     /**
-     * Holds the number of records per page.
+     * Holds the number of records per page (aka the page size).
      * @var int
      */
     private $records_per_page;
@@ -91,15 +91,15 @@ class PaginationHelper
     }
 
     /**
-     * Gets the computed pagination meta data. It includes the total of pages,
+     * Gets the computed pagination meta data. It includes the total number of pages,
      *  current page, number of records per page, and last page.
      *
-     * @return array containing information about the produced pages.
+     * @return array An array containing information about the pagination metadata.
      */
     public function getPaginationInfo(): array
     {
         return array(
-            "count" => $this->total_records,
+            "total" => $this->total_records,
             "offset" => $this->getOffset(),
             "page" => $this->current_page,
             "page_size" => $this->records_per_page,
