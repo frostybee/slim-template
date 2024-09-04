@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Core\PDOService;
 use Psr\Http\Message\ResponseInterface as Response;
 
 abstract class BaseController
