@@ -39,47 +39,53 @@ Below are keybindings that speeds up the insertion of special characters and key
 
 ```json
  {
-    "key": "alt+shift+j",
+    "key": "alt+shift+p",
     "command": "type",
-    "args": { "text": "=>" },
-    "when": "editorTextFocus"
+    "args": {
+      "text": "=>"
+    },
+    "when": "textInputFocus"
   },
   {
-    "key": "alt+shift+i",
+    "key": "ctrl+shift+j",
     "command": "type",
-    "args": { "text": "[" },
-    "when": "editorTextFocus"
+    "args": {
+      "text": "$this->"
+    },
+    "when": "textInputFocus"
   },
   {
-    "key": "alt+shift+h",
+    "key": "ctrl+shift+k",
     "command": "type",
-    "args": { "text": "<?php" },
-    "when": "editorTextFocus"
+    "args": {
+      "text": "->"
+    },
+    "when": "textInputFocus"
   },
   {
-    "key": "alt+shift+l",
+    "key": "ctrl+shift+l",
     "command": "type",
-    "args": { "text": "$this->" },
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "alt+shift+k",
-    "command": "type",
-    "args": { "text": "->" },
-    "when": "editorTextFocus"
+    "args": {
+      "text": "<?php"
+    },
+    "when": "textInputFocus"
   },
   {
     "key": "shift+enter",
     "command": "type",
-    "args": { "text": "$" },
-    "when": "editorTextFocus"
+    "args": {
+      "text": "$"
+    },
+    "when": "textInputFocus"
   },
   {
     "key": "shift+space",
     "command": "type",
-    "args": { "text": "_" },
-    "when": "editorTextFocus"
-  }
+    "args": {
+      "text": "_"
+    },
+    "when": "textInputFocus"
+  },
   ```
 
 ## VS Code Extensions
