@@ -2,10 +2,10 @@
   // PHP-related settings
   // Font settings
   "editor.fontLigatures": true,
-  "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontFamily": "Consolas, Menlo, Monaco, 'Courier New', monospace",
   "editor.fontWeight": "normal",
-  "editor.fontSize": 20,
-  "editor.lineHeight": 25,
+  "editor.fontSize": 24,
+  "editor.lineHeight": 32,
   // Enable format on save
   "editor.formatOnSave": true,
   // Enable word wrap
