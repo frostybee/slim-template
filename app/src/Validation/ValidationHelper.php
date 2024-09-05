@@ -8,7 +8,7 @@ namespace App\Validation;
  * A helper class that exposes various data validation functions.
  * @author frostybee
  */
-class InputsHelper
+class ValidationHelper
 {
 
 

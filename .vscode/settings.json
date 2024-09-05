@@ -1,18 +1,22 @@
 {
+  // PHP-related settings
+  // Font settings
   "editor.fontLigatures": true,
   "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
   "editor.fontWeight": "normal",
+  "editor.fontSize": 20,
+  "editor.lineHeight": 25,
   // Enable format on save
   "editor.formatOnSave": true,
   // Enable word wrap
   "editor.wordWrap": "on",
   // Enable code snippets and hover documentation
-  "editor.snippetSuggestions": "inline",
+  "editor.snippetSuggestions": "top",
   "editor.hover.enabled": true,
+  "editor.codeLens": true,
+  "workbench.statusBar.visible": true,
 
   // Customize the appearance
-  "editor.fontSize": 20,
-  "editor.lineHeight": 25,
   "editor.guides.bracketPairs": true,
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
   "workbench.iconTheme": "material-icon-theme",
@@ -32,6 +36,7 @@
   "editor.mouseWheelZoom": true,
   "workbench.editor.enablePreview": false,
   // Code formatting settings.
+
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -41,7 +46,78 @@
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
   "[php]": {
     "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
-  }
+  },
+  // Disable VS Code automatic formatOnSave for specific file extenssaf
+  "files.associations": {
+    ".htaccess": "plaintext"
+  },
+  "[plaintext]": {
+    "editor.formatOnSave": false
+  },
+  //-------- Code Spell Checker Configuration --------
+  // The Language locale to use when spell checking. "en", "en-US" and "en-GB" are currently supported by default.
+  "cSpell.language": "en",
+
+  // Controls the maximum number of spelling errors per document.
+  "cSpell.maxNumberOfProblems": 100,
+
+  // Controls the number of suggestions shown.
+  "cSpell.numSuggestions": 8,
+
+  // The minimum length of a word before checking it against a dictionary.
+  "cSpell.minWordLength": 4,
+
+  // Specify file types to spell check.
+  "cSpell.enabledLanguageIds": [
+    "csharp",
+    "javascript",
+    "markdown",
+    "php",
+    "plaintext",
+    "typescript",
+    "json",
+    "jsonc",
+    "html",
+    "yml",
+    "sql"
+  ],
+
+  // Enable / Disable the spell checker.
+  "cSpell.enabled": true,
+
+  // Words to add to dictionary for a workspace.
+  "cSpell.words": [],
+
+  // Enable / Disable compound words like 'errormessage'
+  "cSpell.allowCompoundWords": false,
+
+  // Words to be ignored and not suggested.
+  "cSpell.ignoreWords": ["behaviour"],
+
+  // User words to add to dictionary.  Should only be in the user settings.
+  "cSpell.userWords": [],
+
+  // Specify paths/files to ignore.
+  "cSpell.ignorePaths": [
+    "vendor/",
+    "vscode-extension", //
+    ".git" // Ignore the .git directory
+  ],
+  // Set the delay before spell checking the document. Default is 50.
+  "cSpell.spellCheckDelayMs": 50,
+
+  // Set Diagnostic Reporting Level
+  //   Error - Report Spelling Issues as Errors
+  //   Warning - Report Spelling Issues as Warnings
+  //   Information - Report Spelling Issues as Information (default)
+  //   Hint - Report Spelling Issues as Hints, will not show up in Problems
+  "cSpell.diagnosticLevel": "Information"
 }

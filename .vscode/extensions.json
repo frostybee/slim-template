@@ -22,6 +22,8 @@
     "ecmel.vscode-html-css",
     "neilbrayfield.php-docblocker",
     "alefragnani.bookmarks",
-    "bmewburn.vscode-intelephense-client"
+    "bmewburn.vscode-intelephense-client",
+    "donjayamanne.githistory",
+    "eamodio.gitlens"
   ]
 }

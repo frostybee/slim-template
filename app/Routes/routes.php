@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Controllers\AboutController;
-use App\Controllers\TestController;
 use App\Helpers\DateTimeHelper;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -16,7 +15,7 @@ return static function (Slim\App $app): void {
     //* ROUTE: GET /
     $app->get('/', [AboutController::class, 'handleAboutWebService']);
 
-    //$app->get('/test', [TestController::class, 'handleTest']);
+    // $app->get('/test', [TestController::class, 'handleTest']);
 
     //* ROUTE: GET /ping
     $app->get('/ping', function (Request $request, Response $response, $args) {
