@@ -63,5 +63,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-app/Controllers/TestController.php
-app/Models/TestModel.php
+app/src/Controllers/TestController.php
+app/src/Models/TestModel.php
