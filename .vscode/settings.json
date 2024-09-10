@@ -2,7 +2,7 @@
   // PHP-related settings
   // Font settings
   "editor.fontLigatures": true,
-  "editor.fontFamily": "Consolas, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontFamily": "'Fira Code' , Consolas, Menlo, Monaco, 'Courier New', monospace",
   "editor.fontWeight": "normal",
   "editor.fontSize": 24,
   "editor.lineHeight": 32,
