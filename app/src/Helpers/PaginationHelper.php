@@ -96,14 +96,14 @@ class PaginationHelper
      *
      * @return array An array containing information about the pagination metadata.
      */
-    public function getPaginationInfo(): array
+    public function getPaginationMetadata(): array
     {
         return array(
             "total" => $this->total_records,
             "offset" => $this->getOffset(),
-            "page" => $this->current_page,
+            "current_page" => $this->current_page,
             "page_size" => $this->records_per_page,
-            "last_page" => $this->total_pages,
+            "total_pages" => $this->total_pages,
         );
     }
 }
