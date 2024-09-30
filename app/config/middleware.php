@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+use App\Middleware\HelloMiddleware;
 use Slim\App;
 
 return function (App $app) {
-    // Add your middleware here.
+    //TODO: Add your middleware here.
+
     $app->addBodyParsingMiddleware();
     $app->addRoutingMiddleware();
 
