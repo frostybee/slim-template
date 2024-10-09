@@ -27,7 +27,7 @@ abstract class BaseModel
     private $current_page = 1;
 
     /**
-     * Holds the number of records per page.
+     * Holds the number of records to include per page..
      * @var int
      */
     private $records_per_page = 5;
@@ -44,13 +44,17 @@ abstract class BaseModel
     }
 
     /**
-     * Executes an SQL query using a prepared statement.
-     * Arguments can be also passed to further filter the obtained result set.
-     * @param  string $sql       sql query
-     * @param  array  $args      filtering options that can be added to the query.
-     * @return object            returns a PDO object
+     * Executes a SQL query with the provided arguments.
+     *
+     * This method prepares and executes a SQL statement, binding parameters appropriately
+     * whether they are provided as an associative or indexed array.
+     *
+     * @param string $sql The SQL query to be executed.
+     * @param array $args An optional array of parameters to bind to the SQL query.
+     *                     If empty, the query is executed directly without parameter binding.
+     * @return PDOStatement The PDOStatement object representing the prepared statement.
      */
-    private function run($sql, $args = [])
+    private function run(string $sql, array $args = [])
     {
         if (empty($args)) {
             return $this->db->query($sql);
@@ -74,50 +78,58 @@ abstract class BaseModel
     }
 
     /**
-     * Executes the provided query.
+     * Fetches all results from a SQL query as an array.
      *
-     * @param  string $sql       sql query
-     * @param  array  $args      filtering options that can be added to the query.
-     * @param  object $fetchMode set return mode ie object or array
-     * @return object            returns an array containing the selected records.
+     * This method executes a SQL query and returns the results in the specified fetch mode.
+     *
+     * @param string $sql The SQL query to be executed.
+     * @param array $args An optional array of parameters to bind to the SQL query.
+     * @param int $fetchMode The PDO fetch mode to use for the results. Defaults to PDO::FETCH_ASSOC.
+     * @return array An array of results from the query, formatted according to the specified fetch mode.
      */
-    protected function fetchAll($sql, $args = [], $fetchMode = PDO::FETCH_ASSOC): array
+    protected function fetchAll(string $sql, array $args = [], $fetchMode = PDO::FETCH_ASSOC): array
     {
         return (array) $this->run($sql, $args)->fetchAll($fetchMode);
     }
 
     /**
-     * Finds a record matching the provided filtering options.
-     * Can execute a query that joins two or more tables.
-     * Should be used to fetch a single record from a table.
+     * Fetches a single result from a SQL query.
      *
-     * @param  string $sql       sql query
-     * @param  array  $args      filtering options that will be appended to the WHERE clause.
-     * @param  object $fetchMode set return mode ie object or array
-     * @return object            returns single record
+     * This method executes a SQL query and returns a single result in the specified fetch mode.
+     *
+     * @param string $sql The SQL query to be executed.
+     * @param array $conditions An optional array of parameters to bind to the SQL query.
+     *                          It should contain the filtering options.
+     * @param int $fetchMode The PDO fetch mode to use for the result. Defaults to PDO::FETCH_ASSOC.
+     * @return mixed The result of the query, formatted according to the specified fetch mode, or false if no result is found.
      */
-    protected function fetchSingle($sql, $args = [], $fetchMode = PDO::FETCH_ASSOC)
+    protected function fetchSingle(string $sql, array $conditions = [], $fetchMode = PDO::FETCH_ASSOC)
     {
-        return $this->run($sql, $args)->fetch($fetchMode);
+        return $this->run($sql, $conditions)->fetch($fetchMode);
     }
 
 
     /**
-     * Gets the number of records contained in the obtained result set.
+     * Counts the number of rows affected by a SQL query.
      *
-     * @param  string $sql       sql query
-     * @param  array  $args      filtering options.
-     * @param  object $fetchMode set return mode ie object or array
-     * @return integer           returns number of records
+     * This method executes a SQL query and returns the count of rows that were affected.
+     *
+     * @param string $sql The SQL query to be executed, typically a SELECT query.
+     * @param array $args An optional array of parameters to bind to the SQL query.
+     * @return int The number of rows affected by the query.
      */
-    protected function count($sql, $args = []): int
+    protected function count(string $sql, array $args = []): int
     {
         return $this->run($sql, $args)->rowCount();
     }
 
     /**
-     * Gets primary key of last inserted record.
-     * Note: should be used after a SELECT statement.
+     * Retrieves the ID of the last inserted record.
+     *
+     * This method returns the ID generated by the last INSERT operation
+     * performed by the current database connection.
+     *
+     * @return string The ID of the last inserted record, or an empty string if no record was inserted.
      */
     protected function lastInsertId()
     {
@@ -125,13 +137,15 @@ abstract class BaseModel
     }
 
     /**
-     * Inserts a new record into the specified table.
+     * Inserts a new record into the specified table with the provided data.
      *
-     * @param  string $table the table name where the new data should be inserted.
-     * @param  array $data  an associative array of column names (fields) and values.
-     *              For example, ["username"=>"frostybee", "email" =>"frostybee@me.com"]
+     * @param string $table The name of the table to insert the record into.
+     * @param array $data An associative array of column-value pairs to insert
+     *              (e.g., ["username"=>"frostybee", "email" =>"frostybee@me.com"]).
+     * @return mixed The ID of the last inserted record or other relevant value,
+     *               depending on the implementation.
      */
-    protected function insert($table, $data)
+    protected function insert(string $table, array $data): mixed
     {
         //add columns into comma separated string
         $columns = implode(',', array_keys($data));
@@ -152,60 +166,63 @@ abstract class BaseModel
     }
 
     /**
-     * updates one or more records contained in the specified table.
+     * Updates record(s) in the specified table based on the provided data and conditions.
      *
-     * @param  string $table table name
-     * @param  array $data  an array containing the names of the field(s) to be updated along with the new value(s).
-     *                      For example, ["username"=>"frostybee", "email" =>"frostybee@me.com"]
-     * @param  array $where an array containing the filtering operations (it should consist of column names and values)
-     *                      For example, ["user_id"=> 3]
+     * @param string $table The name of the table to update.
+     * @param array $data An associative array of table column-value pairs to update (e.g.,
+     *              ["username"=>"frostybee", "email" =>"frostybee@me.com"]).
+     * @param array $where_conditions An associative array of conditions for the update
+     *              (e.g., ["user_id"=> 3]).
+     * @return int The number of rows affected by the update operation.
      */
-    protected function update($table, $data, $where)
+    protected function update(string $table, array $data, array $where_conditions): int
     {
         //merge data and where together
-        $collection = array_merge($data, $where);
+        $collection = array_merge($data, $where_conditions);
 
         //collect the values from collection
         $values = array_values($collection);
 
         //setup fields
-        $fieldDetails = null;
+        $field_details = null;
         foreach ($data as $key => $value) {
-            $fieldDetails .= "$key = ?,";
+            $field_details .= "$key = ?,";
         }
-        $fieldDetails = rtrim($fieldDetails, ',');
+        $field_details = rtrim($field_details, ',');
 
         //setup where
-        $whereDetails = null;
+        $where_details = null;
         $i = 0;
-        foreach ($where as $key => $value) {
-            $whereDetails .= $i == 0 ? "$key = ?" : " AND $key = ?";
+        foreach ($where_conditions as $key => $value) {
+            $where_details .= $i == 0 ? "$key = ?" : " AND $key = ?";
             $i++;
         }
 
-        $stmt = $this->run("UPDATE $table SET $fieldDetails WHERE $whereDetails", $values);
+        $stmt = $this->run("UPDATE $table SET $field_details WHERE $where_details", $values);
 
         return $stmt->rowCount();
     }
 
     /**
-     * Deletes one or more records.
+     * Deletes record(s) from the specified table based on the given conditions.
      *
-     * @param  string $table table name
-     * @param  array $where an array containing the filtering operation.
-     * Note that those operations will eb appeNded to the WHERE Clause of the DELETE query.
-     * @param  integer $limit limit number of records
+     * @param string $table The name of the table from which to delete records.
+     * @param array $where_conditions An associative array of conditions for the deletion
+     * in the form of ['table_column' => 'value'] (e.g., ['user_id' => 3]).
+     * @param int $limit The maximum number of records to delete. Default is 1.
+     *
+     * @return int The number of rows affected by the delete operation.
      */
-    protected function delete($table, $where, $limit = 1)
+    protected function delete(string $table, array $where_conditions, int $limit = 1): int
     {
         //collect the values from collection
-        $values = array_values($where);
+        $values = array_values($where_conditions);
 
         //setup where
-        $whereDetails = null;
+        $where_details = null;
         $i = 0;
-        foreach ($where as $key => $value) {
-            $whereDetails .= $i == 0 ? "$key = ?" : " AND $key = ?";
+        foreach ($where_conditions as $key => $value) {
+            $where_details .= $i == 0 ? "$key = ?" : " AND $key = ?";
             $i++;
         }
 
@@ -214,11 +231,18 @@ abstract class BaseModel
             $limit = "LIMIT $limit";
         }
 
-        $stmt = $this->run("DELETE FROM $table WHERE $whereDetails $limit", $values);
+        $stmt = $this->run("DELETE FROM $table WHERE $where_details $limit", $values);
 
         return $stmt->rowCount();
     }
 
+    /**
+     * Sets the pagination options for the current instance.
+     *
+     * @param int $current_page The current page number.
+     * @param int $records_per_page The number of records to include per page.
+     * @return void
+     */
     public function setPaginationOptions(int $current_page, int $records_per_page): void
     {
         $this->current_page = $current_page;
