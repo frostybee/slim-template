@@ -31,7 +31,7 @@ Follow the instructions below in the specified order:
 
 ## How Do I Configure My Database Connection?
 
-Follow the outlined instructions in [config/env.example.php](config/env.example.php)
+Follow the outlined instructions in [app/config/env.example.php](app/config/env.example.php)
 
 * Change the value of the `database` variable to reflect the name of the database to be used by your slim app.
 * You may also want to change the connection credentials in that file.
@@ -42,9 +42,10 @@ Sensitive information used in app such as your database credentials, API key, et
 
 Do not use `.env` files for storing environment specific application settings/configurations. Dotenv [is not meant to be used in production](https://github.com/vlucas/phpdotenv/issues/76#issuecomment-87252126)
 
-Just Google: "DB_PASSWORD" filetype:env [Google](https://www.google.ch/search?q=%22DB_PASSWORD%22+filetype:env)
+Just Google: "DB_PASSWORD" filetype:env
+Alternatively, you can visit the following link: [Google env search](https://www.google.ch/search?q=%22DB_PASSWORD%22+filetype:env)
 
-Instead, follow the instructions that are detailed in [config/env.example.php](config/env.example.php)
+Instead, follow the instructions that are detailed in [app/config/env.example.php](app/config/env.example.php)
 
 ## Adding Fira Code Font to VS Code Portable
 

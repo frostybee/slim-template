@@ -7,6 +7,7 @@ use App\Helpers\DateTimeHelper;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+
 return static function (Slim\App $app): void {
 
     // Routes without authentication check: /login, /token
@@ -26,5 +27,9 @@ return static function (Slim\App $app): void {
         ];
         $response->getBody()->write(json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR));
         return $response;
+    });
+    // Example route to test error handling
+    $app->get('/error', function (Request $request, Response $response, $args) {
+        throw new \Slim\Exception\HttpNotFoundException($request, "Something went wrong");
     });
 };
