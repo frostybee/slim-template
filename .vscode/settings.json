@@ -1,6 +1,7 @@
 {
-  // PHP-related settings
-  // Font settings
+  // The following settings are primarily tailored for editing PHP code.
+
+  //-------- Font settings --------
   "editor.fontLigatures": true,
   "editor.fontFamily": "'Fira Code', Consolas, Menlo, Monaco, 'Courier New', monospace",
   "editor.fontWeight": "normal",
@@ -15,13 +16,16 @@
   "editor.hover.enabled": true,
   "editor.codeLens": true,
   "workbench.statusBar.visible": true,
+  // Disable the stupidly annoying hints that show up before of variable names.
+  "editor.inlayHints.enabled": "off",
 
-  // Customize the appearance
+  //-------- Appearance settings --------
   "editor.guides.bracketPairs": true,
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
   "workbench.iconTheme": "material-icon-theme",
   "editor.cursorBlinking": "smooth",
-  // Behaviour
+
+  //-------- Editor-related behaviour settings --------
   "editor.mouseWheelScrollSensitivity": 3,
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
@@ -35,8 +39,8 @@
   "composer.workingPath": "",
   "editor.mouseWheelZoom": true,
   "workbench.editor.enablePreview": false,
-  // Code formatting settings.
 
+  //-------- Code formatting settings --------
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -62,6 +66,7 @@
   "[plaintext]": {
     "editor.formatOnSave": false
   },
+
   //-------- Code Spell Checker Configuration --------
   // The Language locale to use when spell checking. "en", "en-US" and "en-GB" are currently supported by default.
   "cSpell.language": "en",
@@ -85,6 +90,7 @@
     "typescript",
     "json",
     "jsonc",
+    "css", // Bruh,how come I forgot CSS?
     "html",
     "yml",
     "sql"
