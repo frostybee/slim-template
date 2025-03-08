@@ -24,6 +24,12 @@
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
   "workbench.iconTheme": "material-icon-theme",
   "editor.cursorBlinking": "smooth",
+  // Add golden guides to the file explorer view.
+  "workbench.colorCustomizations": {
+    "tree.indentGuidesStroke": "#ffee00",
+    "tree.inactiveIndentGuidesStroke": "#5d5700"
+  },
+  "workbench.tree.renderIndentGuides": "always",
 
   //-------- Editor-related behaviour settings --------
   "editor.mouseWheelScrollSensitivity": 3,
