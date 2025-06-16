@@ -27,15 +27,15 @@
     }
   },
   "require": {
-    "php": "^8.2",
+    "php": "^8.2 || ^8.3 || ^8.4",
     "ext-pdo": "*",
     "ext-json": "*",
-    "slim/slim": "^4.13",
-    "guzzlehttp/guzzle": "^7.8",
-    "php-di/php-di": "^6.4",
-    "firebase/php-jwt": "^6.10",
+    "slim/slim": "^4.14",
+    "guzzlehttp/guzzle": "^7.9",
+    "php-di/php-di": "^7.0",
+    "firebase/php-jwt": "^6.11",
     "fig/http-message-util": "^1.1",
-    "monolog/monolog": "^2.9",
+    "monolog/monolog": "^3.9",
     "nyholm/psr7": "^1.8",
     "nyholm/psr7-server": "^1.1"
   },
