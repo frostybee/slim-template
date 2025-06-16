@@ -81,19 +81,19 @@ Instead, follow the instructions that are detailed in [app/config/env.example.ph
     "editor.fontLigatures": true,
     "editor.fontWeight": "400" // normal
     ```
-    
+
 ## Useful VS Code Keybindings
 
 Below are keybindings that speeds up the insertion of special characters and keywords while editing a `.php` file. These bindings need to be added to your VS Code's keybindings.json
 
 ```json
- {
+  {
     "key": "alt+shift+p",
     "command": "type",
     "args": {
       "text": "=>"
     },
-    "when": "textInputFocus"
+    "when": "textInputFocus && editorLangId == php"
   },
   {
     "key": "ctrl+shift+j",
@@ -101,7 +101,7 @@ Below are keybindings that speeds up the insertion of special characters and key
     "args": {
       "text": "$this->"
     },
-    "when": "textInputFocus"
+    "when": "textInputFocus && editorLangId == php"
   },
   {
     "key": "ctrl+shift+k",
@@ -109,7 +109,7 @@ Below are keybindings that speeds up the insertion of special characters and key
     "args": {
       "text": "->"
     },
-    "when": "textInputFocus"
+    "when": "textInputFocus && editorLangId == php"
   },
   {
     "key": "ctrl+shift+l",
@@ -117,7 +117,7 @@ Below are keybindings that speeds up the insertion of special characters and key
     "args": {
       "text": "<?php"
     },
-    "when": "textInputFocus"
+    "when": "textInputFocus && editorLangId == php"
   },
   {
     "key": "shift+enter",
@@ -125,7 +125,7 @@ Below are keybindings that speeds up the insertion of special characters and key
     "args": {
       "text": "$"
     },
-    "when": "textInputFocus"
+    "when": "textInputFocus && editorLangId == php"
   },
   {
     "key": "shift+space",
@@ -133,8 +133,8 @@ Below are keybindings that speeds up the insertion of special characters and key
     "args": {
       "text": "_"
     },
-    "when": "textInputFocus"
-  },
+    "when": "textInputFocus && editorLangId == php"
+  }
   ```
 
 ## VS Code Extensions
