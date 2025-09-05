@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 /**
- * Environment specific application configuration.
+ * Environment-specific application configuration.
  *
- * You should store all secret information (username, password, tokens,
+ * You should store all secret information (usernames, passwords, tokens,
  * private keys) here.
  *
  * TODO:
  * -----
- * 1) Within this folder, create a new PHP file called env.php,
- * 2) Copy the content of this file over to env.php,
- * 2) Make sure the env.php file is added to your .gitignore,
- *    so it is not checked-in the code.
+ * 1) Within this folder, create a new PHP file called env.php.
+ * 2) Copy the contents of this file into env.php.
+ * 3) Make sure the env.php file is added to your .gitignore
+ *    so it is not checked into version control.
  *
- *? NOTE:
- * ----
- * This usage ensures that no sensitive passwords or API keys will
- * ever be in the version control history so there is less risk of
- * a security breach, and production values will never have to be
- * shared with all project collaborators.
+ * NOTE:
+ * -----
+ * This approach ensures that no sensitive passwords or API keys
+ * will ever be included in version control history, reducing the
+ * risk of a security breach. It also ensures that production values
+ * never have to be shared with all project collaborators.
  */
 
 return function (array $settings): array {
