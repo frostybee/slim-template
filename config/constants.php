@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 // Holds the path of the application's root directory.
-define('APP_BASE_PATH', dirname(__DIR__, 2));
+define('APP_BASE_PATH', dirname(__DIR__, 1));
 // Holds the name of the app's root directory.
-define('APP_ROOT_DIR', basename(dirname(__FILE__, 3)));
+define('APP_ROOT_DIR', basename(dirname(__FILE__, 2)));
 
 //* HTTP response status code.
 const HTTP_OK = 200;

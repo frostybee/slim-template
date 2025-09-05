@@ -23,7 +23,7 @@ $settings['error'] = [
 // Logger settings
 $settings['logger'] = [
     // Log file location
-    'path' => realpath(__DIR__ . '/../../var/logs'),
+    'path' => realpath(__DIR__ . '/../var/logs'),
     // Default log level
     'level' => Psr\Log\LogLevel::DEBUG,
 ];

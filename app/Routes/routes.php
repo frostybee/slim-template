@@ -16,7 +16,9 @@ return static function (Slim\App $app): void {
     //* ROUTE: GET /
     $app->get('/', [AboutController::class, 'handleAboutWebService']);
 
-    // $app->get('/test', [TestController::class, 'handleTest']);
+    //* NOTE: callback naming pattern: handle<ActionName>, e.g. handleGetPlayers
+    //* ROUTE: GET /players
+    //$app->get('/players', [PlayersController::class, 'handleGetPlayers']);
 
     //* ROUTE: GET /ping
     $app->get('/ping', function (Request $request, Response $response, $args) {

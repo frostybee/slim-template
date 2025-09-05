@@ -14,7 +14,7 @@ $settings = require __DIR__ . '/defaults.php';
 $configFiles = [
     __DIR__ . sprintf('/local.%s.php', $_ENV['APP_ENV']),
     __DIR__ . '/env.php',
-    __DIR__ . '/../../env.php',
+    __DIR__ . '/../env.php',
 ];
 
 foreach ($configFiles as $configFile) {

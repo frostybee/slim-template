@@ -24,11 +24,11 @@ $definitions = [
 
         $app = AppFactory::createFromContainer($container);
         //$app->setBasePath('/slim-template');
-        //echo APP_BASE_PATH;exit;
+        // echo APP_ROOT_DIR;exit;
         $app->setBasePath('/' . APP_ROOT_DIR);
 
         // Register routes
-        (require_once realpath(__DIR__ . '/../Routes/routes.php'))($app);
+        (require_once realpath(__DIR__ . '/../app/Routes/routes.php'))($app);
 
         // Register middleware
         (require_once realpath(__DIR__ . '/middleware.php'))($app);
