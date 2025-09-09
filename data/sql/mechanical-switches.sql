@@ -1,9 +1,9 @@
 -- Mechanical Switches Database Schema
-DROP DATABASE IF EXISTS switches_mice;
+DROP DATABASE IF EXISTS keyboards_mice;
 
-CREATE DATABASE switches_mice;
+CREATE DATABASE keyboards_mice;
 
-USE switches_mice;
+USE keyboards_mice;
 
 -- Vendors
 CREATE TABLE vendors (
@@ -240,7 +240,7 @@ CREATE TABLE mouse_reviews (
 
 -- Mechanical Switches Database Sample Data
 -- This file contains INSERT statements for populating the database with realistic data
--- USE switches_mice;
+-- USE keyboards_mice;
 -- Insert Vendors
 INSERT INTO
     vendors (
