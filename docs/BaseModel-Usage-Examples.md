@@ -42,7 +42,7 @@ In your controller or service, instantiate your model:
 use App\Core\PDOService;
 use App\Models\UserModel;
 
-// Assuming you have PDOService configured
+// Assuming you have PDOService configured.
 $pdoService = new PDOService();
 $userModel = new UserModel($pdoService);
 ```
@@ -52,7 +52,7 @@ $userModel = new UserModel($pdoService);
 ### Basic Insert
 
 ```php
-// Insert a new user
+// Insert a new user.
 $userData = [
     'name' => 'John Doe',
     'email' => 'john@example.com',
@@ -77,7 +77,7 @@ try {
 // 1. Table name format
 // 2. Non-empty data array
 
-// This will throw InvalidArgumentException
+// This will throw InvalidArgumentException.
 try {
     $this->insert('123invalid', $userData); // Invalid table name
 } catch (InvalidArgumentException $e) {
@@ -85,7 +85,7 @@ try {
     // Output: "Invalid table name: '123invalid'. Table names can only contain..."
 }
 
-// This will also throw InvalidArgumentException
+// This will also throw InvalidArgumentException.
 try {
     $this->insert('users', []); // Empty data
 } catch (InvalidArgumentException $e) {
@@ -99,7 +99,7 @@ try {
 ### Fetch All Records
 
 ```php
-// Get all active users
+// Get all active users.
 $sql = "SELECT * FROM users WHERE status = ?";
 $users = $this->fetchAll($sql, ['active']);
 
@@ -111,7 +111,7 @@ foreach ($users as $user) {
 ### Fetch All with Named Parameters
 
 ```php
-// Using associative array for parameters
+// Using associative array for parameters.
 $sql = "SELECT * FROM users WHERE age >= :min_age AND status = :status";
 $users = $this->fetchAll($sql, [
     'min_age' => 18,
@@ -122,7 +122,7 @@ $users = $this->fetchAll($sql, [
 ### Fetch Single Record
 
 ```php
-// Get a specific user
+// Get a specific user.
 $sql = "SELECT * FROM users WHERE id = ?";
 $user = $this->fetchSingle($sql, [5]);
 
@@ -136,12 +136,12 @@ if ($user) {
 ### Count Records
 
 ```php
-// Count total users
+// Count total users.
 $sql = "SELECT COUNT(*) as total FROM users";
 $count = $this->count($sql);
 echo "Total users: " . $count;
 
-// Count with conditions
+// Count with conditions.
 $sql = "SELECT COUNT(*) as total FROM users WHERE status = ?";
 $activeCount = $this->count($sql, ['active']);
 echo "Active users: " . $activeCount;
@@ -152,7 +152,7 @@ echo "Active users: " . $activeCount;
 ### Basic Update
 
 ```php
-// Update user information
+// Update user information.
 $updateData = [
     'name' => 'Jane Doe',
     'email' => 'jane.doe@example.com',
@@ -174,7 +174,7 @@ try {
 ### Update Multiple Conditions
 
 ```php
-// Update all inactive users from a specific domain
+// Update all inactive users from a specific domain.
 $updateData = [
     'status' => 'archived',
     'archived_at' => date('Y-m-d H:i:s')
@@ -218,7 +218,7 @@ try {
 ### Basic Delete
 
 ```php
-// Delete a specific user (default limit = 1)
+// Delete a specific user (default limit = 1).
 $whereConditions = ['id' => 5];
 
 try {
@@ -232,7 +232,7 @@ try {
 ### Delete Multiple Records
 
 ```php
-// Delete multiple inactive users
+// Delete multiple inactive users.
 $whereConditions = ['status' => 'inactive'];
 $limit = 10; // Delete up to 10 records
 
@@ -243,7 +243,7 @@ echo "Deleted {$deletedRows} inactive user(s)";
 ### Delete with No Limit
 
 ```php
-// Delete all records matching criteria (use with caution!)
+// Delete all records matching criteria (use with caution!).
 $whereConditions = ['status' => 'banned'];
 $limit = 0; // No limit
 
@@ -257,7 +257,7 @@ echo "Deleted {$deletedRows} banned user(s)";
 
 ```php
 try {
-    // Your database operation
+    // Your database operation.
     $result = $this->insert('users', $userData);
     
 } catch (InvalidArgumentException $e) {
@@ -268,7 +268,7 @@ try {
     ], 400);
     
 } catch (RuntimeException $e) {
-    // Database connection or SQL execution errors
+    // Database connection or SQL execution errors.
     error_log('Database error: ' . $e->getMessage());
     return $response->withJson([
         'error' => 'Database operation failed',
@@ -276,7 +276,7 @@ try {
     ], 500);
     
 } catch (Exception $e) {
-    // Any other unexpected errors
+    // Any other unexpected errors.
     error_log('Unexpected error: ' . $e->getMessage());
     return $response->withJson([
         'error' => 'Internal server error'
