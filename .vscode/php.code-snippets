@@ -1,172 +1,156 @@
 {
-  // Place your slim-mvc workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
-  // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+  // Place your slim-mvc workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body, and  description.
+  // Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
   // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
   // used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
   // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
   // Placeholders with the same ids are connected.
-  // Example:
-  // "Print to console": {
-  // 	"scope": "javascript,typescript",
-  // 	"prefix": "log",
-  // 	"body": [
-  // 		"console.log('$1');",
-  // 		"$2"
-  // 	],
-  // 	"description": "Log output to console"
-  // }
-  "This keyword": {
-    "prefix": "dis",
+
+  // === Slim framework snippets ===
+  "Slim - This Keyword": {
+    "scope": "php",
+    "prefix": "_s-this",
     "body": "$$this->${0}",
     "description": "Insert $this-> keyword in PHP"
   },
-  "Short Echo Var": {
-    "prefix": "hse_var",
-    "body": "<?= $${1:var}?>",
-    "description": "Insert short echo var <?= $var ?> in HTML"
-  },
-  "Short Echo expression": {
-    "prefix": "hse_expr",
-    "body": "<?= ${1:expression}?>",
-    "description": "Insert short echo expression <?= expression ?> in HTML"
-  },
-  "HTML Special Chars": {
-    "prefix": "h_hschars",
-    "body": "<?= hs($${1:var}) ?>",
-    "description": "Insert htmlspecialchars wrapper function call <?= hs($var) ?> in HTML"
-  },
-  "Dump and Die": {
-    "prefix": "dd",
-    "body": "dd($${1:var});",
-    "description": "Insert a dd function call: dump data and stop execution."
-  },
-  "Render Template": {
-    "prefix": "render",
+  "Slim - Render Template": {
+    "scope": "php",
+    "prefix": "_s-render",
     "body": "return $$this->render($$response, '${1:viewName.php}', $${2:data});",
     "description": "Insert a render view statement in a controller method"
   },
 
-  "Include Template": {
-    "prefix": "inc",
-    "body": "<?php include '${1:template}.php'; ?>",
-    "description": "PHP include in statement"
+  // === HTML embedded php snippets ===
+  "HTML - Short Echo Var": {
+    "scope": "php,html",
+    "prefix": "_h-echo-var",
+    "body": "<?= $${1:var}?>",
+    "description": "Insert short echo var <?= $var ?> in HTML"
   },
-
-  "Require File": {
-    "prefix": "req",
-    "body": "<?php require_once '${1:filename}.php'; ?>",
-    "description": "PHP require once statement."
+  "HTML - Short Echo Expression": {
+    "scope": "php,html",
+    "prefix": "_h-echo-expr",
+    "body": "<?= ${1:expression}?>",
+    "description": "Insert short echo expression <?= expression ?> in HTML"
   },
-
-  "Function Declaration": {
-    "prefix": "fn",
-    "body": "function ${1:functionName}(${2:parameters}) {\n\t${3:// code}\n}",
-    "description": "PHP function declaration"
+  "HTML - HTML Special Chars": {
+    "scope": "php,html",
+    "prefix": "_h-hs",
+    "body": "<?= hs($${1:var}) ?>",
+    "description": "Insert htmlspecialchars wrapper function call <?= hs($var) ?> in HTML"
   },
-  "If Statement in HTML": {
-    "prefix": "hif",
+  "HTML - If Statement": {
+    "prefix": "_h-if",
     "body": "<?php if (${1:condition}): ?>\n\t${2:// code}\n<?php endif; ?>",
     "description": "Insert a PHP if statement in HTML"
   },
-
-  "If Else Statement": {
-    "prefix": "hifel",
+  "HTML - If Else Statement": {
+    "prefix": "_h-if-else",
     "body": "<?php if (${1:condition}): ?>\n\t${2:// code}\n<?php else: ?>\n\t${3:// else code}\n<?php endif; ?>",
     "description": "Insert a PHP if-else statement in HTML"
   },
-
-  "ElseIf Statement": {
-    "prefix": "helseif",
+  "HTML - ElseIf Statement": {
+    "prefix": "_h-elseif",
     "body": "<?php elseif (${1:condition}): ?>",
     "description": "Insert a PHP elseif statement in HTML"
   },
-
-  "Switch Statement": {
-    "prefix": "hswitch",
+  "HTML - Switch Statement": {
+    "prefix": "_h-switch",
     "body": "<?php switch (${1:variable}): ?>\n\t<?php case ${2:value}: ?>\n\t\t${3:// code}\n\t\t<?php break; ?>\n\t<?php default: ?>\n\t\t${4:// default code}\n<?php endswitch; ?>",
     "description": "Insert a PHP switch statement in HTML"
   },
-
-  "For Loop": {
-    "prefix": "hfor",
+  "HTML - For Loop": {
+    "prefix": "_h-for",
     "body": "<?php for ($${1:i} = ${2:0}; $${1} < ${3:count}; $${1}++): ?>\n\t${4:// code}\n<?php endfor; ?>",
     "description": "Insert a 0-index PHP for loop in HTML"
   },
-
-  "Foreach Loop": {
-    "prefix": "hforeach",
+  "HTML - Foreach Loop": {
+    "prefix": "_h-foreach",
     "body": "<?php foreach (${1:array} as ${2:key} => ${3:value}): ?>\n\t${4:// code}\n<?php endforeach; ?>",
     "description": "Insert a PHP foreach loop in HTML"
   },
-
-  "While Loop": {
-    "prefix": "hwhile",
+  "HTML - While Loop": {
+    "prefix": "_h-while",
     "body": "<?php while (${1:condition}): ?>\n\t${2:// code}\n<?php endwhile; ?>",
     "description": "Insert a PHP while loop in HTML"
   },
+  "HTML - Include Template": {
+    "prefix": "_h-include",
+    "body": "<?php include '${1:template}.php'; ?>",
+    "description": "PHP include statement"
+  },
+  "HTML - Require File": {
+    "prefix": "_h-require",
+    "body": "<?php require_once '${1:filename}.php'; ?>",
+    "description": "PHP require once statement"
+  },
 
-  "Class Declaration": {
-    "prefix": "class",
+  // === PHP CORE SNIPPETS ===
+  "PHP - Class Declaration": {
+    "prefix": "_p-class",
     "body": "class ${1:ClassName} {\n\tpublic function __construct($${2:args}) {\n\t\t${3:// constructor}\n\t}\n\n\t${4:// methods}\n}",
     "description": "PHP class declaration"
   },
-
-  "Namespace Declaration": {
-    "prefix": "namespace",
+  "PHP - Function Declaration": {
+    "prefix": "_p-function",
+    "body": "function ${1:functionName}(${2:parameters}) {\n\t${3:// code}\n}",
+    "description": "PHP function declaration"
+  },
+  "PHP - Namespace Declaration": {
+    "prefix": "_p-namespace",
     "body": "namespace ${1:Namespace};",
     "description": "PHP namespace declaration"
   },
-
-  "Use Statement": {
-    "prefix": "use",
+  "PHP - Use Statement": {
+    "prefix": "_p-use",
     "body": "use ${1:Some\\Namespace\\Class};",
     "description": "PHP use statement"
   },
-
-  "DocBlock": {
-    "prefix": "doc",
+  "PHP - DocBlock": {
+    "prefix": "_p-doc",
     "body": "/**\n * ${1:Description}\n *\n * @param ${2:type} $${3:param}\n * @return ${4:void}\n */",
     "description": "PHPDoc block"
   },
-
-  "Return Statement": {
-    "prefix": "return",
+  "PHP - Return Statement": {
+    "prefix": "_p-return",
     "body": "return ${1:expression};",
     "description": "PHP return statement"
   },
-
-  "Array Declaration": {
-    "prefix": "arr",
+  "PHP - Array Declaration": {
+    "prefix": "_p-array",
     "body": "$${1:array_name} = [${2:values}]",
     "description": "PHP short array"
   },
-
-  "Print Statement": {
-    "prefix": "print_r",
-    "body": "print_r($${1:expression});",
-    "description": "PHP print statement"
-  },
-
-  "Echo Statement": {
-    "prefix": "echo_expr",
+  "PHP - Echo Statement": {
+    "prefix": "_p-echo",
     "body": "echo ${1:expression};",
     "description": "PHP echo statement"
   },
-  "Echo Var Statement": {
-    "prefix": "echo_var",
+  "PHP - Echo Var Statement": {
+    "prefix": "_p-echo-var",
     "body": "echo $${1:expression};",
     "description": "PHP echo variable statement"
   },
-  // If statement (ternary operator style)
-  "Ternary Operator": {
-    "prefix": "ternary",
+  "PHP - Ternary Operator": {
+    "prefix": "_p-ternary",
     "body": "$${1:var} = ${2:condition} ? ${3:trueValue} : ${4:falseValue};",
     "description": "PHP ternary operator"
   },
-
-  "Null Coalescing": {
-    "prefix": "coalesce",
+  "PHP - Null Coalescing": {
+    "prefix": "_p-coalesce",
     "body": "$${1:var} = ${2:variable} ?? ${3:defaultValue};",
     "description": "PHP null coalescing operator"
+  },
+
+  // === Debug & utility snippets ===
+  "Debug - Dump and Die": {
+    "prefix": "_d-dd",
+    "body": "dd($${1:var});",
+    "description": "Insert a dd function call: dump data and stop execution"
+  },
+  "Debug - Print Statement": {
+    "prefix": "_d-print",
+    "body": "print_r($${1:expression});",
+    "description": "PHP print statement"
   }
 }
