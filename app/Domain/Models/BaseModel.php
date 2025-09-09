@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace App\Domain\Models;
 
-use App\Core\PDOService;
 use PDO;
+use App\Helpers\Core\PDOService;
 use Exception;
 
 /**
@@ -43,7 +43,7 @@ abstract class BaseModel
 
     /**
      * Validates a table name to prevent SQL injection.
-     * 
+     *
      * @param string $table The table name to validate
      * @throws InvalidArgumentException If table name is invalid
      */
@@ -52,13 +52,13 @@ abstract class BaseModel
         if (empty($table)) {
             throw new \InvalidArgumentException("Table name cannot be empty. Please provide a valid table name.");
         }
-        
+
         if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $table)) {
             throw new \InvalidArgumentException(
                 "Invalid table name: '$table'. " .
-                "Table names can only contain letters, numbers, and underscores, " .
-                "and must start with a letter or underscore. " .
-                "Example: 'users', 'user_profiles', 'Product_Categories'"
+                    "Table names can only contain letters, numbers, and underscores, " .
+                    "and must start with a letter or underscore. " .
+                    "Example: 'users', 'user_profiles', 'Product_Categories'"
             );
         }
     }
@@ -84,12 +84,12 @@ abstract class BaseModel
                 }
                 return $stmt;
             }
-            
+
             $stmt = $this->db->prepare($sql);
             if ($stmt === false) {
                 throw new Exception("SQL statement preparation failed. This usually means there's a syntax error in your query.");
             }
-            
+
             //check if args is associative or sequential?
             $is_assoc = !empty($args) && array_keys($args) !== range(0, count($args) - 1);
             if ($is_assoc) {
@@ -112,8 +112,8 @@ abstract class BaseModel
         } catch (Exception $e) {
             throw new \RuntimeException(
                 "Database operation failed: " . $e->getMessage() . ". " .
-                "This usually indicates a problem with your SQL query, database connection, or data types. " .
-                "Check your query syntax and ensure the database is accessible."
+                    "This usually indicates a problem with your SQL query, database connection, or data types. " .
+                    "Check your query syntax and ensure the database is accessible."
             );
         }
     }
@@ -189,15 +189,15 @@ abstract class BaseModel
     protected function insert(string $table, array $data): mixed
     {
         $this->validateTableName($table);
-        
+
         if (empty($data)) {
             throw new \InvalidArgumentException(
                 "No data provided for insert operation. " .
-                "Please provide an associative array of column-value pairs. " .
-                "Example: ['name' => 'John', 'email' => 'john@example.com']"
+                    "Please provide an associative array of column-value pairs. " .
+                    "Example: ['name' => 'John', 'email' => 'john@example.com']"
             );
         }
-        
+
         //add columns into comma separated string
         $columns = implode(',', array_keys($data));
 
@@ -225,23 +225,23 @@ abstract class BaseModel
     protected function update(string $table, array $data, array $where_conditions): int
     {
         $this->validateTableName($table);
-        
+
         if (empty($data)) {
             throw new \InvalidArgumentException(
                 "No data provided for update operation. " .
-                "Please provide an associative array of column-value pairs to update. " .
-                "Example: ['name' => 'Jane', 'email' => 'jane@example.com']"
+                    "Please provide an associative array of column-value pairs to update. " .
+                    "Example: ['name' => 'Jane', 'email' => 'jane@example.com']"
             );
         }
-        
+
         if (empty($where_conditions)) {
             throw new \InvalidArgumentException(
                 "No WHERE conditions provided for update operation. " .
-                "This prevents accidental updates to all records. " .
-                "Please provide conditions like: ['id' => 5] or ['status' => 'active']"
+                    "This prevents accidental updates to all records. " .
+                    "Please provide conditions like: ['id' => 5] or ['status' => 'active']"
             );
         }
-        
+
         //merge data and where together
         $collection = array_merge($data, $where_conditions);
 
@@ -280,15 +280,15 @@ abstract class BaseModel
     protected function delete(string $table, array $where_conditions, int $limit = 1): int
     {
         $this->validateTableName($table);
-        
+
         if (empty($where_conditions)) {
             throw new \InvalidArgumentException(
                 "No WHERE conditions provided for delete operation. " .
-                "This prevents accidental deletion of all records. " .
-                "Please provide conditions like: ['id' => 5] or ['status' => 'inactive']"
+                    "This prevents accidental deletion of all records. " .
+                    "Please provide conditions like: ['id' => 5] or ['status' => 'inactive']"
             );
         }
-        
+
         //collect the values from collection
         $values = array_values($where_conditions);
 

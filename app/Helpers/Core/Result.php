@@ -2,14 +2,39 @@
 
 declare(strict_types=1);
 
-namespace App\Core;
+namespace App\Helpers\Core;
 
 use Exception;
+use InvalidArgumentException;
+use Throwable;
+
+/**
+ * Exception thrown when attempting to retrieve data from a failed result.
+ */
+class ResultDataException extends Exception
+{
+    public function __construct(string $message = "Cannot get data from a failed result.", int $code = 0, ?Throwable $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
+}
+
+/**
+ * Exception thrown when attempting to retrieve errors from a successful result.
+ */
+class ResultErrorException extends Exception
+{
+    public function __construct(string $message = "Cannot get errors from a successful result.", int $code = 0, ?Throwable $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
+}
 
 /**
  * Provides an implementation of the Result pattern.
  * This class encapsulates the outcome of an operation, which can be either a success or failure.
  * It includes details such as a success flag, messages, data, and errors.
+ *
  */
 class Result
 {
@@ -27,7 +52,7 @@ class Result
      *
      * @var string
      */
-    private string $message;
+    private string $message = '';
 
     /**
      * Holds the actual result of a successful operation.
@@ -35,7 +60,7 @@ class Result
      *
      * @var mixed
      */
-    private $data;
+    private mixed $data = null;
 
     /**
      * An array or other data structure containing one or more error messages.
@@ -43,7 +68,7 @@ class Result
      *
      * @var mixed
      */
-    private $errors;
+    private mixed $errors = null;
 
     /**
      * Constructor to create an instance of Result.
@@ -55,6 +80,9 @@ class Result
      */
     private function __construct(bool $success, string $message, mixed $data = null, mixed $errors = null)
     {
+        if (trim($message) === '') {
+            throw new InvalidArgumentException('Message cannot be empty');
+        }
         $this->is_success = $success;
         $this->message = $message;
         $this->data = $data;
@@ -68,7 +96,7 @@ class Result
      * @param mixed|null $data Optional additional data to include with the result.
      * @return Result A Result instance indicating a successful operation.
      */
-    public static function success($message, mixed $data = null): Result
+    public static function success(string $message, mixed $data = null): Result
     {
         return new Result(true, $message, $data);
     }
@@ -80,7 +108,7 @@ class Result
      * @param mixed|null $errors Optional additional errors to include with the failure.
      * @return Result A Result instance indicating failure.
      */
-    public static function failure($message, mixed $errors = null): Result
+    public static function failure(string $message, mixed $errors = null): Result
     {
         return new Result(false, $message, null, $errors);
     }
@@ -114,7 +142,7 @@ class Result
     public function getData(): mixed
     {
         if (!$this->is_success) {
-            throw new Exception("Cannot get data from a failed result.");
+            throw new ResultDataException();
         }
         return $this->data;
     }
@@ -128,7 +156,7 @@ class Result
     public function getErrors(): mixed
     {
         if ($this->is_success) {
-            throw new Exception("Cannot get errors from a successful result.");
+            throw new ResultErrorException();
         }
         return $this->errors;
     }
@@ -162,10 +190,10 @@ class Result
     public function __toString(): string
     {
         if ($this->is_success) {
-            $data = $this->data !== null ? 'Data: ' . json_encode($this->data) : 'No data';
+            $data = $this->data !== null ? 'Data: ' . (json_encode($this->data) ?: 'Invalid JSON data') : 'No data';
             return "Success: {$this->message}, {$data}";
         } else {
-            $errors = $this->errors !== null ? 'Errors: ' . json_encode($this->errors) : 'No errors';
+            $errors = $this->errors !== null ? 'Errors: ' . (json_encode($this->errors) ?: 'Invalid JSON errors') : 'No errors';
             return "Failure: {$this->message}, {$errors}";
         }
     }

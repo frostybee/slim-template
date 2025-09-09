@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Core\AppSettings;
-use App\Core\PDOService;
+use App\Helpers\Core\AppSettings;
+use App\Helpers\Core\PDOService;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;

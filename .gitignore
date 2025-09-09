@@ -62,4 +62,4 @@ $RECYCLE.BIN/
 *.lnk
 
 app/Controllers/TestController.php
-app/Models/TestModel.php
+app/Domain/Models/TestModel.php

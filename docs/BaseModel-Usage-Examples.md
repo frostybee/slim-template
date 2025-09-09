@@ -19,9 +19,9 @@ The `BaseModel` is an abstract class that provides database operations using PDO
 ```php
 <?php
 
-namespace App\Models;
+namespace App\Domain\Models;
 
-use App\Core\PDOService;
+use App\Helpers\Core\PDOService;
 
 class UserModel extends BaseModel
 {
@@ -39,8 +39,8 @@ In your controller or service, instantiate your model:
 ```php
 <?php
 
-use App\Core\PDOService;
-use App\Models\UserModel;
+use App\Helpers\Core\PDOService;
+use App\Domain\Models\UserModel;
 
 // Assuming you have PDOService configured.
 $pdoService = new PDOService();

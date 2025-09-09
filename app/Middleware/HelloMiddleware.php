@@ -28,14 +28,14 @@ class HelloMiddleware implements MiddlewareInterface
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
         // Optional: Handle the incoming request
-        // ...
+        //* ...Before middleware!
 
         //! DO NOT remove or change the following statements.
         // Invoke the next middleware and get response
         $response = $handler->handle($request);
 
         // Optional: Handle the outgoing response
-        // ...
+        //* ...After middleware!
 
         return $response;
     }
