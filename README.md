@@ -1,6 +1,7 @@
 - [Starter Template](#starter-template)
   - [How Do I Use/Deploy this Template?](#how-do-i-usedeploy-this-template)
   - [How Do I Configure My Database Connection?](#how-do-i-configure-my-database-connection)
+  - [How do I Use Composer with Wampoon?](#how-do-i-use-composer-with-wampoon)
   - [On Using Environment Variables](#on-using-environment-variables)
   - [Useful VS Code Keybindings](#useful-vs-code-keybindings)
   - [Adding Fira Code Font to VS Code Portable](#adding-fira-code-font-to-vs-code-portable)
@@ -19,9 +20,8 @@ Follow the instructions below in the specified order:
 3. Copy the `slim-template-main` folder into your web server's **document root** (i.e., `htdocs`).
 4. Rename the `slim-template-main` folder to `[project_name]-api` (for example, `worldcup-api`).
 5. Open your `[project_name]-api` folder in VS Code.
-6. If you are using Wampoon, open a terminal window in VS Code (press `Ctrl+`\`) and select the `Command Prompt`from the dropdown menu in the upper-right corner. Then run`"../../composer.bat" update` (**NOTE**: double quotes are required) to install or update the required dependencies.
-
-   * If you are not using Wampoon, just run Composer from the command line.
+6. Install the project dependencies by running composer. If you are using Wampoon, open a terminal window in VS Code (hit ``` Ctrl+` ```) then run `.\composer.bat update`  
+   - If you are not using Wampoon to develop your app, just run composer from the command line.
 7. In the `config` folder, make a copy of `env.example.php` and rename it to `env.php`.
 8. Adjust your database credentials (**see below**).
 
@@ -33,6 +33,16 @@ Follow the outlined instructions in [config/env.example.php](config/env.example.
 
 * Change the value of the `database` variable to reflect the name of the database to be used by your slim app.
 * You may also want to change the connection credentials in that file.
+
+## How do I Use Composer with Wampoon?
+
+To install or update your project dependencies deployed on Wampoon, use the `composer.bat` script as follows:
+
+| Action                | Command                           | Description                                                                     |
+| --------------------- | --------------------------------- | ------------------------------------------------------------------------------- |
+| Install dependencies  | `.\composer.bat install`          | Installs packages listed in `composer.json` and creates the `vendor` directory. |
+| Update dependencies   | `.\composer.bat update`           | Refreshes all packages to the latest versions allowed by `composer.json`.       |
+| Regenerate autoloader | `.\composer.bat dump-autoload -o` | Rebuilds the optimized autoloader after adding or removing classes.             |
 
 ## On Using Environment Variables
 
