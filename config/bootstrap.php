@@ -5,7 +5,13 @@ declare(strict_types=1);
 use DI\ContainerBuilder;
 use Slim\App;
 
-require realpath(__DIR__ . '/../vendor/autoload.php');
+// require realpath(__DIR__ . '/../vendor/autoload.php');
+$autoloadPath = realpath(__DIR__ . '/../vendor/autoload.php');
+if ($autoloadPath !== false && is_file($autoloadPath)) {
+    require $autoloadPath;
+} else {
+    die('<br><strong>Error:</strong> Composer autoload file not found. <br> Fix: Please run the following command in a <strong>VS Code command prompt terminal</strong> to install the missing dependencies: <br><strong>Command (keep the double quotes):</strong> <span style="background-color: yellow;"> "../../composer.bat" update </span><br> For more details, refer to: <br><a href="https://github.com/frostybee/slim-template?tab=readme-ov-file#how-do-i-usedeploy-this-template" target="_blank">Configuration instructions in README.md</a>');
+}
 
 // Load the app's global constants.
 require_once realpath(__DIR__ . '/constants.php');

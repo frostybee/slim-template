@@ -12,6 +12,17 @@ ini_set('display_startup_errors', '0');
 // Timezone
 date_default_timezone_set('America/Toronto');
 
+
+function myCustomErrorHandler(int $error_no, string $error_message, string $file, int $line)
+{
+    $error_message = <<<ERROR_MESSAGE
+    Oh snap! Something went wrong...<br><hr> <b>Error:</b> #[$error_no] occurred in <b>[$file]</b> at line <b>[$line]</b>: <br> <b>Message:</b>&nbsp;$error_message <br><hr>
+    ERROR_MESSAGE;
+    echo $error_message;
+}
+
+set_error_handler('myCustomErrorHandler');
+
 $settings = [];
 
 // Error handler
