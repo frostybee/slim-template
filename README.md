@@ -38,11 +38,12 @@ Follow the outlined instructions in [config/env.example.php](config/env.example.
 
 To install or update your project dependencies deployed on Wampoon, use the `composer.bat` script as follows:
 
-| Action                | Command                           | Description                                                                     |
-| --------------------- | --------------------------------- | ------------------------------------------------------------------------------- |
-| Install dependencies  | `.\composer.bat install`          | Installs packages listed in `composer.json` and creates the `vendor` directory. |
-| Update dependencies   | `.\composer.bat update`           | Refreshes all packages to the latest versions allowed by `composer.json`.       |
-| Regenerate autoloader | `.\composer.bat dump-autoload -o` | Rebuilds the optimized autoloader after adding or removing classes.             |
+| Action                | Command                            | Description                                                                     |
+| --------------------- | ---------------------------------- | ------------------------------------------------------------------------------- |
+| Install dependencies  | `.\composer.bat install`           | Installs packages listed in `composer.json` and creates the `vendor` directory. |
+| Update dependencies   | `.\composer.bat update`            | Refreshes all packages to the latest versions allowed by `composer.json`.       |
+| Add a package         | `.\composer.bat require [package]` | Installs a new package and adds it to `composer.json`.                          |
+| Regenerate autoloader | `.\composer.bat dump-autoload -o`  | Rebuilds the optimized autoloader after adding or removing classes.             |
 
 ## On Using Environment Variables
 
