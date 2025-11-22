@@ -6,7 +6,7 @@ use DI\ContainerBuilder;
 use Slim\App;
 
 // require realpath(__DIR__ . '/../vendor/autoload.php');
-$autoloadPath = realpath(__DIR__ . '/../vendor/autoload.php');
+$autoloadPath = __DIR__ . '/../vendor/autoload.php';
 if ($autoloadPath !== false && is_file($autoloadPath)) {
     require $autoloadPath;
 } else {
@@ -14,12 +14,12 @@ if ($autoloadPath !== false && is_file($autoloadPath)) {
 }
 
 // Load the app's global constants.
-require_once realpath(__DIR__ . '/constants.php');
+require_once __DIR__ . '/constants.php';
 // Include the global functions that will be used across the app's various components.
-require realpath(__DIR__ . '/functions.php');
+require_once __DIR__ . '/functions.php';
 
 // Configure the DI container and load dependencies.
-$definitions = require realpath(__DIR__ . '/container.php');
+$definitions = require_once __DIR__ . '/container.php';
 
 // Build DI container instance
 //@see https://php-di.org/
