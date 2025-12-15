@@ -44,6 +44,9 @@
     "sort-packages": true
   },
   "scripts": {
-    "start": "php -S localhost:8080 -t public public/index.php"
+    "start": "php -S localhost:8080 -t public public/index.php",
+    "post-create-project-cmd": [
+      "@php -r \"copy('config/env.example.php', 'config/env.php');\""
+    ]
   }
 }

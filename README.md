@@ -1,5 +1,7 @@
 - [Starter Template](#starter-template)
   - [How Do I Use/Deploy this Template?](#how-do-i-usedeploy-this-template)
+    - [Option 1: Using Composer (Recommended)](#option-1-using-composer-recommended)
+    - [Option 2: Manual Installation](#option-2-manual-installation)
   - [How Do I Configure My Database Connection?](#how-do-i-configure-my-database-connection)
   - [How do I Use Composer with Wampoon?](#how-do-i-use-composer-with-wampoon)
   - [On Using Environment Variables](#on-using-environment-variables)
@@ -13,14 +15,25 @@ This repository contains an application skeleton for creating REST-based Web ser
 
 ## How Do I Use/Deploy this Template?
 
-Follow the instructions below in the specified order:
+### Option 1: Using Composer (Recommended)
+
+1. Open a terminal in your web server's **document root** (i.e., `htdocs`).
+2. Run the following command:
+   ```bash
+   composer create-project frostybee/slim-template [project-name]-api
+   ```
+   Replace `[project-name]` with your project name (e.g., `worldcup-api`).
+3. Open your `[project-name]-api` folder in VS Code.
+4. Adjust your database credentials in `config/env.php` (**see below**).
+
+### Option 2: Manual Installation
 
 1. Download this repository as a `.zip` file.
 2. Extract the downloaded `slim-template-main.zip` file locally.
 3. Copy the `slim-template-main` folder into your web server's **document root** (i.e., `htdocs`).
 4. Rename the `slim-template-main` folder to `[project_name]-api` (for example, `worldcup-api`).
 5. Open your `[project_name]-api` folder in VS Code.
-6. Install the project dependencies by running composer. If you are using Wampoon, open a terminal window in VS Code (hit ``` Ctrl+` ```) then run `.\composer.bat update`  
+6. Install the project dependencies by running composer. If you are using Wampoon, open a terminal window in VS Code (hit ``` Ctrl+` ```) then run `.\composer.bat update`
    - If you are not using Wampoon to develop your app, just run composer from the command line.
 7. In the `config` folder, make a copy of `env.example.php` and rename it to `env.php`.
 8. Adjust your database credentials (**see below**).
