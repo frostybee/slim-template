@@ -5,7 +5,8 @@ declare(strict_types=1);
 // Holds the path of the application's root directory.
 define('APP_BASE_PATH', dirname(__DIR__, 1));
 // Holds the name of the app's root directory.
-define('APP_ROOT_DIR', basename(dirname(__FILE__, 2)));
+// In Docker, this can be set via environment variable; otherwise, uses the folder name.
+define('APP_ROOT_DIR', $_ENV['APP_ROOT_DIR'] ?? basename(dirname(__FILE__, 2)));
 
 //* HTTP response status code.
 const HTTP_OK = 200;

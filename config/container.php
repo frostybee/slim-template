@@ -23,9 +23,8 @@ $definitions = [
     App::class => function (ContainerInterface $container) {
 
         $app = AppFactory::createFromContainer($container);
-        //$app->setBasePath('/slim-template');
-        // echo APP_ROOT_DIR;exit;
-        $app->setBasePath('/' . APP_ROOT_DIR);
+        // Set base path from APP_ROOT_DIR (empty in Docker, subdirectory name in Wampoon)
+        $app->setBasePath(APP_ROOT_DIR ? '/' . APP_ROOT_DIR : '');
 
         // Register routes
         (require_once __DIR__ . '/../app/Routes/routes.php')($app);

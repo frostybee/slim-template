@@ -2,11 +2,11 @@
   - [How Do I Use/Deploy this Template?](#how-do-i-usedeploy-this-template)
     - [Option 1: Using Composer (Recommended)](#option-1-using-composer-recommended)
     - [Option 2: Manual Installation](#option-2-manual-installation)
+    - [Option 3: Using Docker (macOS/Linux/Windows)](#option-3-using-docker-macoslinuxwindows)
   - [How Do I Configure My Database Connection?](#how-do-i-configure-my-database-connection)
   - [How do I Use Composer with Wampoon?](#how-do-i-use-composer-with-wampoon)
   - [On Using Environment Variables](#on-using-environment-variables)
   - [Useful VS Code Keybindings](#useful-vs-code-keybindings)
-  - [Adding Fira Code Font to VS Code Portable](#adding-fira-code-font-to-vs-code-portable)
   
 
 # Starter Template
@@ -39,6 +39,92 @@ This repository contains an application skeleton for creating REST-based Web ser
 8. Adjust your database credentials (**see below**).
 
 **```NOTE:```** You can always clone this repository. However, if you do, you need to remove the ```.git``` ***hidden*** directory before you copy this template over to ```htdocs```
+
+### Option 3: Using Docker (macOS/Linux/Windows)
+
+Docker allows you to run the application in containers without installing PHP, Apache, or MySQL locally. This works on **macOS**, **Linux**, and **Windows**.
+
+**Prerequisites:**
+- Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+**Quick Start:**
+
+1. Clone or download this repository.
+2. Open a terminal in the project folder.
+3. Start all containers:
+   ```bash
+   docker-compose up -d
+   ```
+4. Install PHP dependencies (first time only):
+   ```bash
+   docker-compose exec app composer install
+   ```
+5. Access the application:
+   - **App:** http://localhost:8080
+   - **phpMyAdmin:** http://localhost:8081
+
+**Configuring the Database:**
+
+The default database name is `slim_app`. To use a different database name:
+
+1. Update `docker-compose.yml`:
+   ```yaml
+   db:
+     environment:
+       MYSQL_DATABASE: your_database_name
+   ```
+
+2. Update `config/env.docker.php`:
+   ```php
+   $settings['db']['database'] = 'your_database_name';
+   ```
+
+3. Rebuild containers: `docker-compose up -d --build`
+
+**Database Credentials (for phpMyAdmin):**
+| Username  | Password  |
+| --------- | --------- |
+| root      | secret    |
+| slim_user | slim_pass |
+
+**Common Commands:**
+
+| Action             | Command                                    |
+| ------------------ | ------------------------------------------ |
+| Start containers   | `docker-compose up -d`                     |
+| Stop containers    | `docker-compose down`                      |
+| View app logs      | `docker-compose logs -f app`               |
+| Run composer       | `docker-compose exec app composer install` |
+| Delete database    | `docker-compose down -v`                   |
+| Rebuild containers | `docker-compose up -d --build`             |
+
+**Working with Multiple Projects:**
+
+If you run **one project at a time**, no configuration changes are needed. Simply stop one project before starting another:
+
+```bash
+# Stop current project
+docker-compose down
+
+# Switch to another project
+cd ../other-project
+docker-compose up -d
+```
+
+If you need to run **multiple projects simultaneously**, change the port numbers in `docker-compose.yml` to avoid conflicts:
+
+```yaml
+services:
+  app:
+    ports:
+      - "8082:80"      # Change 8080 to 8082, 8083, etc.
+  db:
+    ports:
+      - "3307:3306"    # Change 3306 to 3307, 3308, etc.
+  phpmyadmin:
+    ports:
+      - "8083:80"      # Change 8081 to 8083, 8084, etc.
+```
 
 ## How Do I Configure My Database Connection?
 
@@ -124,38 +210,3 @@ Below are keybindings that speeds up the insertion of special characters and key
     "when": "textInputFocus && editorLangId == php"
   }
   ```
-
-## Adding Fira Code Font to VS Code Portable
-
-1. Open your VS Code installation folder,
-2. Navigate to:
-    ```batch 
-    resources > app > out > vs >code > electron-sandbox > workbench
-    ```
-
-3. Open `workbench.js` in a text editor,
-4. Add the following to the end of `workbench.js` then save it,
-
-    ```javascript
-    var styleNode = document.createElement('style'); 
-    styleNode.type = "text/css"; 
-    var styleText = document.createTextNode(`
-        @font-face{
-            font-family: 'Fira Code';
-            src: url('https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/eot/FiraCode-Regular.eot') format('embedded-opentype'),
-                url('https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/woff2/FiraCode-Regular.woff2') format('woff2'),
-                url('https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/woff/FiraCode-Regular.woff') format('woff'),
-                url('https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/ttf/FiraCode-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }`); 
-    styleNode.appendChild(styleText); 
-    document.getElementsByTagName('head')[0].appendChild(styleNode);
-    ```
-5. Open VS Code
-6. Open `settings.json` then add the following:
-    ```json
-    "editor.fontFamily": "Fira Code",
-    "editor.fontLigatures": true,
-    "editor.fontWeight": "400" // normal
-    ```

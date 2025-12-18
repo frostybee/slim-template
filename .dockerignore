@@ -1,0 +1,5 @@
+vendor/
+var/logs/*.log
+.git/
+.gitignore
+*.md
