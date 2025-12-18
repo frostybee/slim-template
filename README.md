@@ -46,20 +46,37 @@ Docker allows you to run the application in containers without installing PHP, A
 
 **Prerequisites:**
 - Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- Install [Git](https://git-scm.com/downloads)
 
 **Quick Start:**
 
-1. Clone or download this repository.
-2. Open a terminal in the project folder.
-3. Start all containers:
+1. Clone the repository (since Composer requires PHP, which you may not have installed):
+   ```bash
+   git clone https://github.com/frostybee/slim-template.git [project-name]-api
+   ```
+   Replace `[project-name]` with your project name (e.g., `worldcup-api`).
+
+2. Navigate to the project folder:
+   ```bash
+   cd [project-name]-api
+   ```
+
+3. Remove the `.git` folder to start fresh with your own repository:
+   ```bash
+   rm -rf .git
+   ```
+
+4. Start all containers:
    ```bash
    docker-compose up -d
    ```
-4. Install PHP dependencies (first time only):
+
+5. Install PHP dependencies (first time only):
    ```bash
    docker-compose exec app composer install
    ```
-5. Access the application:
+
+6. Access the application:
    - **App:** http://localhost:8080
    - **phpMyAdmin:** http://localhost:8081
 
