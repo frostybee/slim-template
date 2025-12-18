@@ -1,7 +1,13 @@
 FROM php:8.4-apache
 
+# Install system dependencies for PHP extensions
+RUN apt-get update && apt-get install -y \
+    libcurl4-openssl-dev \
+    libonig-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql curl mbstring
 
 # Enable Apache mod_rewrite for .htaccess
 RUN a2enmod rewrite

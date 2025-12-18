@@ -1,8 +1,8 @@
 - [Starter Template](#starter-template)
   - [How Do I Use/Deploy this Template?](#how-do-i-usedeploy-this-template)
     - [Option 1: Using Composer (Recommended)](#option-1-using-composer-recommended)
-    - [Option 2: Manual Installation](#option-2-manual-installation)
-    - [Option 3: Using Docker (macOS/Linux/Windows)](#option-3-using-docker-macoslinuxwindows)
+    - [Option 2: Using Docker (macOS/Linux/Windows)](#option-2-using-docker-macoslinuxwindows)
+    - [Option 3: Manual Installation](#option-3-manual-installation)
   - [How Do I Configure My Database Connection?](#how-do-i-configure-my-database-connection)
   - [How do I Use Composer with Wampoon?](#how-do-i-use-composer-with-wampoon)
   - [On Using Environment Variables](#on-using-environment-variables)
@@ -26,23 +26,10 @@ This repository contains an application skeleton for creating REST-based Web ser
 3. Open your `[project-name]-api` folder in VS Code.
 4. Adjust your database credentials in `config/env.php` (**see below**).
 
-### Option 2: Manual Installation
 
-1. Download this repository as a `.zip` file.
-2. Extract the downloaded `slim-template-main.zip` file locally.
-3. Copy the `slim-template-main` folder into your web server's **document root** (i.e., `htdocs`).
-4. Rename the `slim-template-main` folder to `[project_name]-api` (for example, `worldcup-api`).
-5. Open your `[project_name]-api` folder in VS Code.
-6. Install the project dependencies by running composer. If you are using Wampoon, open a terminal window in VS Code (hit ``` Ctrl+` ```) then run `.\composer.bat update`
-   - If you are not using Wampoon to develop your app, just run composer from the command line.
-7. In the `config` folder, make a copy of `env.example.php` and rename it to `env.php`.
-8. Adjust your database credentials (**see below**).
+### Option 2: Using Docker (macOS/Linux/Windows)
 
-**```NOTE:```** You can always clone this repository. However, if you do, you need to remove the ```.git``` ***hidden*** directory before you copy this template over to ```htdocs```
-
-### Option 3: Using Docker (macOS/Linux/Windows)
-
-Docker allows you to run the application in containers without installing PHP, Apache, or MySQL locally. This works on **macOS**, **Linux**, and **Windows**.
+Docker allows you to run the application in containers without installing PHP, Apache, or MariaDB locally. This works on **macOS**, **Linux**, and **Windows**.
 
 **Prerequisites:**
 - Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
@@ -98,6 +85,21 @@ The default database name is `slim_app`. To use a different database name:
 
 3. Rebuild containers: `docker-compose up -d --build`
 
+**Importing Database Schema:**
+
+To automatically import a database schema when the container starts:
+
+1. Place your `.sql` file(s) in the `docker/init-db/` folder
+2. Start the containers: `docker-compose up -d`
+
+The SQL files will be executed automatically on first container creation. If you have multiple files, they run in alphabetical order (e.g., `01-schema.sql`, `02-data.sql`).
+
+To re-import the schema, remove the database volume and restart:
+```bash
+docker-compose down -v
+docker-compose up -d
+```
+
 **Database Credentials (for phpMyAdmin):**
 | Username  | Password  |
 | --------- | --------- |
@@ -142,6 +144,21 @@ services:
     ports:
       - "8083:80"      # Change 8081 to 8083, 8084, etc.
 ```
+
+### Option 3: Manual Installation
+
+1. Download this repository as a `.zip` file.
+2. Extract the downloaded `slim-template-main.zip` file locally.
+3. Copy the `slim-template-main` folder into your web server's **document root** (i.e., `htdocs`).
+4. Rename the `slim-template-main` folder to `[project_name]-api` (for example, `worldcup-api`).
+5. Open your `[project_name]-api` folder in VS Code.
+6. Install the project dependencies by running composer. If you are using Wampoon, open a terminal window in VS Code (hit ``` Ctrl+` ```) then run `.\composer.bat update`
+   - If you are not using Wampoon to develop your app, just run composer from the command line.
+7. In the `config` folder, make a copy of `env.example.php` and rename it to `env.php`.
+8. Adjust your database credentials (**see below**).
+
+**```NOTE:```** You can always clone this repository. However, if you do, you need to remove the ```.git``` ***hidden*** directory before you copy this template over to ```htdocs```
+
 
 ## How Do I Configure My Database Connection?
 

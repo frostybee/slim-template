@@ -13,7 +13,7 @@ services:
       - APP_ROOT_DIR=
 
   db:
-    image: mysql:8.0
+    image: mariadb:11
     ports:
       - "3306:3306"
     environment:
@@ -23,6 +23,7 @@ services:
       MYSQL_PASSWORD: slim_pass
     volumes:
       - db_data:/var/lib/mysql
+      - ./docker/init-db:/docker-entrypoint-initdb.d
 
   phpmyadmin:
     image: phpmyadmin:latest

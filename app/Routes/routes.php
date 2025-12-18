@@ -29,8 +29,19 @@ return static function (Slim\App $app): void {
         $response->getBody()->write(json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR));
         return $response;
     });
+
     // Example route to test error handling.
     $app->get('/error', function (Request $request, Response $response, $args) {
         throw new \Slim\Exception\HttpNotFoundException($request, "Something went wrong");
+    });
+
+    //* ROUTE: GET /phpinfo -> Display PHP configuration (useful for Docker)
+    //* Docker URL: http://localhost:8080/phpinfo
+    $app->get('/phpinfo', function (Request $request, Response $response, $args) {
+        ob_start();
+        phpinfo();
+        $info = ob_get_clean();
+        $response->getBody()->write($info);
+        return $response->withHeader('Content-Type', 'text/html');
     });
 };
