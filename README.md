@@ -8,7 +8,6 @@
   - [On Using Environment Variables](#on-using-environment-variables)
   - [Useful VS Code Keybindings](#useful-vs-code-keybindings)
   
-
 # Starter Template
 
 This repository contains an application skeleton for creating REST-based Web services using the latest version of the [**Slim micro framework**](https://www.slimframework.com/).
@@ -25,7 +24,6 @@ This repository contains an application skeleton for creating REST-based Web ser
    Replace `[project-name]` with your project name (e.g., `worldcup-api`).
 3. Open your `[project-name]-api` folder in VS Code.
 4. Adjust your database credentials in `config/env.php` (**see below**).
-
 
 ### Option 2: Using Docker (macOS/Linux/Windows)
 
@@ -53,17 +51,13 @@ Docker allows you to run the application in containers without installing PHP, A
    rm -rf .git
    ```
 
-4. Start all containers:
+4. Start all containers by executing the following command:
    ```bash
    docker-compose up -d
    ```
+   > **Note:** Use `docker-compose up -d --build` to rebuild images after modifying the Dockerfile or related configurations.
 
-5. Install PHP dependencies (first time only):
-   ```bash
-   docker-compose exec app composer install
-   ```
-
-6. Access the application:
+5. Access the application:
    - **App:** http://localhost:8080
    - **phpMyAdmin:** http://localhost:8081
 
@@ -108,14 +102,13 @@ docker-compose up -d
 
 **Common Commands:**
 
-| Action             | Command                                    |
-| ------------------ | ------------------------------------------ |
-| Start containers   | `docker-compose up -d`                     |
-| Stop containers    | `docker-compose down`                      |
-| View app logs      | `docker-compose logs -f app`               |
-| Run composer       | `docker-compose exec app composer install` |
-| Delete database    | `docker-compose down -v`                   |
-| Rebuild containers | `docker-compose up -d --build`             |
+| Action             | Command                        |
+| ------------------ | ------------------------------ |
+| Start containers   | `docker-compose up -d`         |
+| Stop containers    | `docker-compose down`          |
+| View app logs      | `docker-compose logs -f app`   |
+| Delete database    | `docker-compose down -v`       |
+| Rebuild containers | `docker-compose up -d --build` |
 
 **Working with Multiple Projects:**
 
@@ -159,7 +152,6 @@ services:
 
 **```NOTE:```** You can always clone this repository. However, if you do, you need to remove the ```.git``` ***hidden*** directory before you copy this template over to ```htdocs```
 
-
 ## How Do I Configure My Database Connection?
 
 Follow the outlined instructions in [config/env.example.php](config/env.example.php)
@@ -188,7 +180,6 @@ Just Google: "DB_PASSWORD" filetype:env
 Alternatively, you can visit the following link: [Google env search](https://www.google.ch/search?q=%22DB_PASSWORD%22+filetype:env)
 
 Instead, follow the instructions that are detailed in [config/env.example.php](config/env.example.php)
-
 
 ## Useful VS Code Keybindings
 

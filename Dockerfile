@@ -31,3 +31,6 @@ RUN mkdir -p /var/www/html/var/logs && chmod -R 777 /var/www/html/var/logs
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
+
+# And finally, we install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader

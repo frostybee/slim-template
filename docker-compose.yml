@@ -33,6 +33,8 @@ services:
       PMA_HOST: db
       PMA_USER: root
       PMA_PASSWORD: secret
+    volumes:
+      - ./docker/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
     depends_on:
       - db
 
