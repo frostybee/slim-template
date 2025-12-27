@@ -51,8 +51,8 @@ $settings['db'] = [
         PDO::ATTR_CASE => PDO::CASE_NATURAL,
         // Set default fetch mode to array
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        // Set character set
-        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci'
+        // Set character set (use new constant on PHP 8.4+, fallback for older versions)
+        (class_exists('Pdo\\Mysql') ? Pdo\Mysql::ATTR_INIT_COMMAND : PDO::MYSQL_ATTR_INIT_COMMAND) => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci'
     ]
 ];
 

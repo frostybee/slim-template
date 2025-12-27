@@ -13,7 +13,7 @@
   "editor.wordWrap": "on",
   // Enable code snippets and hover documentation
   "editor.snippetSuggestions": "top",
-  "editor.hover.enabled": true,
+  "editor.hover.enabled": "on",
   "editor.codeLens": true,
   "workbench.statusBar.visible": true,
   // Disable the stupidly annoying hints that show up before of variable names.
