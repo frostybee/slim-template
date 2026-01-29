@@ -3,6 +3,7 @@
     - [Option 1: Using Composer (Recommended)](#option-1-using-composer-recommended)
     - [Option 2: Using Docker (macOS/Linux/Windows)](#option-2-using-docker-macoslinuxwindows)
     - [Option 3: Manual Installation](#option-3-manual-installation)
+    - [Option 4: Using Nginx (Native Server)](#option-4-using-nginx-native-server)
   - [How Do I Configure My Database Connection?](#how-do-i-configure-my-database-connection)
   - [How do I Use Composer with Wampoon?](#how-do-i-use-composer-with-wampoon)
   - [On Using Environment Variables](#on-using-environment-variables)
@@ -151,6 +152,32 @@ services:
 8. Adjust your database credentials (**see below**).
 
 **```NOTE:```** You can always clone this repository. However, if you do, you need to remove the ```.git``` ***hidden*** directory before you copy this template over to ```htdocs```
+
+### Option 4: Using Nginx (Native Server)
+
+If you're running Nginx directly on your server (not through Docker), configuration files are provided in the `nginx/` directory.
+
+**Quick Start:**
+
+1. Deploy your application to your server
+2. Copy `nginx/slim-template.conf` to `/etc/nginx/sites-available/your-project-name`
+3. Edit the configuration file to match your setup (domain, paths, PHP-FPM socket)
+4. Enable the site:
+   ```bash
+   sudo ln -s /etc/nginx/sites-available/your-project-name /etc/nginx/sites-enabled/
+   ```
+5. Test and reload:
+   ```bash
+   sudo nginx -t && sudo systemctl reload nginx
+   ```
+
+**Important Notes:**
+
+- Set document root to the `public/` directory (not the project root)
+- Nginx doesn't use `.htaccess` files - all configuration is in the server config
+- You need PHP-FPM installed and running
+
+For detailed instructions, see [nginx/README.md](nginx/README.md).
 
 ## How Do I Configure My Database Connection?
 
