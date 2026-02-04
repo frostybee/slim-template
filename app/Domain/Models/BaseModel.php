@@ -64,6 +64,38 @@ abstract class BaseModel
     }
 
     /**
+     * Formats a database error message based on the SQLSTATE code.
+     *
+     * @param string $sqlState The SQLSTATE error code from PDO
+     * @param string $originalMessage The original error message
+     * @return string A user-friendly error message
+     */
+    private function formatDatabaseErrorMessage(string $sqlState, string $originalMessage): string
+    {
+        $errorMessages = [
+            '42S02' => "Table not found. The database table referenced in your query does not exist. " .
+                "Please make sure the database name, username, and password are correct in the config/env.php file. " .
+                "If the config/env.php file is not found, please create it by copying the env.example.php file and renaming it to env.php.",
+            '42S22' => "Column not found. The column referenced in your query does not exist in the table. " .
+                "Please verify your column names match the database schema.",
+            '23000' => "Integrity constraint violation. This usually means a duplicate key, foreign key violation, " .
+                "or a required field is missing. Check your data for duplicates or missing required values.",
+            '42000' => "SQL syntax error. There is an error in your SQL query syntax. " .
+                "Please review the query structure and ensure all keywords and operators are correct.",
+            'HY093' => "Invalid parameter binding. The number of bound parameters does not match the placeholders in your query.",
+            '08006' => "Connection failure. The database connection was lost. Please check that the database server is running.",
+            '28000' => "Authentication failed. Invalid database username or password. " .
+                "Please verify your credentials in config/env.php.",
+        ];
+
+        $baseMessage = $errorMessages[$sqlState] ??
+            "Database operation failed. This usually indicates a problem with your SQL query, " .
+            "database connection, or data types. Check your query syntax and ensure the database is accessible.";
+
+        return $baseMessage . " Original error: " . $originalMessage;
+    }
+
+    /**
      * Executes a SQL query with the provided arguments.
      *
      * This method prepares and executes a SQL statement, binding parameters appropriately
@@ -109,11 +141,18 @@ abstract class BaseModel
                 }
             }
             return $stmt;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
+            if ($e instanceof \PDOException) {
+                $sqlState = $e->getCode();
+                $message = $this->formatDatabaseErrorMessage((string) $sqlState, $e->getMessage());
+                throw new \RuntimeException($message, 0, $e);
+            }
             throw new \RuntimeException(
                 "Database operation failed: " . $e->getMessage() . ". " .
                     "This usually indicates a problem with your SQL query, database connection, or data types. " .
-                    "Check your query syntax and ensure the database is accessible."
+                    "Check your query syntax and ensure the database is accessible.",
+                0,
+                $e
             );
         }
     }
