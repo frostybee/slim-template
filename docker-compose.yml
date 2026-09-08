@@ -6,6 +6,7 @@ services:
     volumes:
       - .:/var/www/html
       - ./config/env.docker.php:/var/www/html/config/env.php
+      - /var/www/html/vendor
     depends_on:
       - db
     environment:
