@@ -28,16 +28,17 @@
   },
   "require": {
     "php": ">=8.2",
-    "ext-pdo": "*",
     "ext-json": "*",
-    "slim/slim": "^4.15",
-    "guzzlehttp/guzzle": "^7.10",
-    "php-di/php-di": "^7.1",
-    "firebase/php-jwt": "^7.0",
+    "ext-pdo": "*",
     "fig/http-message-util": "^1.1",
+    "firebase/php-jwt": "^7.0",
+    "frostybee/valicomb": "^1.5",
+    "guzzlehttp/guzzle": "^7.10",
     "monolog/monolog": "^3.10",
     "nyholm/psr7": "^1.8",
-    "nyholm/psr7-server": "^1.1"
+    "nyholm/psr7-server": "^1.1",
+    "php-di/php-di": "^7.1",
+    "slim/slim": "^4.15"
   },
   "config": {
     "process-timeout": 0,
