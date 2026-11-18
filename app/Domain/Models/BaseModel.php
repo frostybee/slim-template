@@ -237,8 +237,9 @@ abstract class BaseModel
             );
         }
 
-        //add columns into comma separated string
-        $columns = implode(',', array_keys($data));
+        //add columns into comma separated string and surround with backticks
+        //to avoid errors related to reserved SQL keywords (e.g. `condition`)
+        $columns = implode(',', array_map(fn($s) => "`$s`", array_keys($data)));
 
         //get values
         $values = array_values($data);
