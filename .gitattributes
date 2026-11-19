@@ -19,7 +19,6 @@ docs/* linguist-documentation
 # ------------------------------------------------------------------------------
 
 /.github            export-ignore
-/tests              export-ignore
 /build              export-ignore
 composer.lock       export-ignore
 

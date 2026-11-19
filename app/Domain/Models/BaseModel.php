@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Models;
 
-use PDO;
+use App\Exceptions\DatabaseException;
 use App\Helpers\Core\PDOService;
-use Exception;
+use PDO;
 
 /**
  * A wrapper class for interacting with a MySQL DB using the PDO API.
@@ -18,7 +18,7 @@ abstract class BaseModel
     /**
      * holds a handle to a database connection.
      */
-    private ?PDO $db = null;
+    private PDO $db;
 
     /**
      * The index of the current page.
@@ -29,6 +29,12 @@ abstract class BaseModel
      * Holds the number of records to include per page.
      */
     private int $records_per_page = 5;
+
+    /**
+     * Counter used to give each nested transaction a unique savepoint name.
+     * It is static because all models share the same database connection.
+     */
+    private static int $savepoint_counter = 0;
 
     /**
      * Instantiates the PDO wrapper.
@@ -51,7 +57,7 @@ abstract class BaseModel
      *                         Integer keys from list-style arrays are rejected.
      * @param string $kind Either 'table' or 'column'. Used in error messages.
      * @return string The validated name wrapped in backticks.
-     * @throws InvalidArgumentException If the name is empty or invalid
+     * @throws \InvalidArgumentException If the name is empty or invalid
      */
     private function quoteIdentifier(string|int $name, string $kind = 'column'): string
     {
@@ -91,10 +97,12 @@ abstract class BaseModel
     {
         $errorMessages = [
             '42S02' => "Table not found. The database table referenced in your query does not exist. " .
-                "Please make sure the database name, username, and password are correct in the config/env.php file. " .
-                "If the config/env.php file is not found, please create it by copying the env.example.php file and renaming it to env.php.",
+                "Check the spelling of the table name, and make sure the schema was imported into " .
+                "the database that is set in the config/env.php file.",
             '42S22' => "Column not found. The column referenced in your query does not exist in the table. " .
                 "Please verify your column names match the database schema.",
+            '42S21' => "Duplicate column name. Two columns selected by your query have the same name. " .
+                "Give each one a unique alias (e.g. SELECT users.id AS user_id, orders.id AS order_id).",
             '23000' => "Integrity constraint violation. This usually means a duplicate key, foreign key violation, " .
                 "or a required field is missing. Check your data for duplicates or missing required values.",
             '42000' => "SQL syntax error. There is an error in your SQL query syntax. " .
@@ -116,7 +124,8 @@ abstract class BaseModel
      * Executes a SQL query with the provided arguments.
      *
      * This method prepares and executes a SQL statement, binding parameters appropriately
-     * whether they are provided as an associative or indexed array.
+     * whether they are provided as an associative or indexed array. Integers, booleans,
+     * and null values are bound with their own type, everything else as a string.
      *
      * Use it in a model for statements that insert(), update(), and delete()
      * cannot express (e.g. an UPDATE with a LIKE condition). Table and column
@@ -125,57 +134,129 @@ abstract class BaseModel
      *
      * @param string $sql The SQL query to be executed.
      * @param array $args An optional array of parameters to bind to the SQL query.
+     *                     Use string keys for named placeholders (:name) and a
+     *                     plain list for positional placeholders (?).
      *                     If empty, the query is executed directly without parameter binding.
-     * @return \PDOStatement The PDOStatement object representing the prepared statement.
+     * @return \PDOStatement The PDOStatement object representing the executed statement.
+     * @throws DatabaseException If the database rejects the query.
      */
     protected function run(string $sql, array $args = []): \PDOStatement
     {
         try {
-            if (empty($args)) {
-                $stmt = $this->db->query($sql);
-                if ($stmt === false) {
-                    throw new Exception("Query execution failed. Check your SQL syntax and table/column names.");
-                }
-                return $stmt;
+            if ($args === []) {
+                return $this->db->query($sql);
             }
 
             $stmt = $this->db->prepare($sql);
-            if ($stmt === false) {
-                throw new Exception("SQL statement preparation failed. This usually means there's a syntax error in your query.");
+
+            //named placeholders use string keys, positional placeholders don't
+            $is_named = array_filter(array_keys($args), 'is_string') !== [];
+            if (!$is_named) {
+                //positional placeholders are numbered from 1
+                $args = array_combine(range(1, count($args)), array_values($args));
             }
 
-            //check if args is associative or sequential?
-            $is_assoc = !empty($args) && array_keys($args) !== range(0, count($args) - 1);
-            if ($is_assoc) {
-                foreach ($args as $key => $value) {
-                    if (is_int($value)) {
-                        $stmt->bindValue(":$key", $value, PDO::PARAM_INT);
-                    } else {
-                        $stmt->bindValue(":$key", $value);
-                    }
+            foreach ($args as $key => $value) {
+                $param = $is_named ? ':' . ltrim((string) $key, ':') : $key;
+                if (is_bool($value)) {
+                    $value = (int) $value;
                 }
-                if (!$stmt->execute()) {
-                    throw new Exception("Statement execution failed. Check your parameter bindings and data types.");
-                }
-            } else {
-                if (!$stmt->execute($args)) {
-                    throw new Exception("Statement execution failed. Make sure your parameter array matches the number of placeholders in your query.");
-                }
+                $stmt->bindValue($param, $value, $this->getParamType($value));
             }
+            $stmt->execute();
+
             return $stmt;
-        } catch (\Exception $e) {
-            if ($e instanceof \PDOException) {
-                $sqlState = $e->getCode();
-                $message = $this->formatDatabaseErrorMessage((string) $sqlState, $e->getMessage());
-                throw new \RuntimeException($message, 0, $e);
-            }
-            throw new \RuntimeException(
-                "Database operation failed: " . $e->getMessage() . ". " .
-                    "This usually indicates a problem with your SQL query, database connection, or data types. " .
-                    "Check your query syntax and ensure the database is accessible.",
-                0,
+        } catch (\PDOException $e) {
+            $sql_state = (string) ($e->errorInfo[0] ?? $e->getCode());
+            throw new DatabaseException(
+                $this->formatDatabaseErrorMessage($sql_state, $e->getMessage()),
+                $sql_state,
                 $e
             );
+        }
+    }
+
+    /**
+     * Picks the PDO parameter type that matches a PHP value.
+     *
+     * @param mixed $value The value to be bound to a placeholder.
+     * @return int One of the PDO::PARAM_* constants.
+     */
+    private function getParamType(mixed $value): int
+    {
+        return match (true) {
+            is_int($value) => PDO::PARAM_INT,
+            $value === null => PDO::PARAM_NULL,
+            default => PDO::PARAM_STR,
+        };
+    }
+
+    /**
+     * Builds the WHERE clause shared by update() and delete().
+     *
+     * Conditions are joined with AND. A null value is matched with IS NULL,
+     * because "column = NULL" is never true in SQL. Any other value is
+     * compared with = and bound to a placeholder.
+     *
+     * @param array $where_conditions An associative array of column-value pairs.
+     * @return array A two-item list: the SQL of the conditions, and the values to bind.
+     */
+    private function buildWhere(array $where_conditions): array
+    {
+        $where_parts = [];
+        $values = [];
+        foreach ($where_conditions as $key => $value) {
+            $column = $this->quoteIdentifier($key);
+            if ($value === null) {
+                $where_parts[] = "$column IS NULL";
+            } else {
+                $where_parts[] = "$column = ?";
+                $values[] = $value;
+            }
+        }
+
+        return [implode(' AND ', $where_parts), $values];
+    }
+
+    /**
+     * Runs several database operations as one transaction.
+     *
+     * Every change made inside $work is saved only if $work finishes. If it
+     * throws, the changes are rolled back and the exception is thrown again.
+     *
+     * A call made while a transaction is already open is nested: it uses a
+     * savepoint, so a failure rolls back only the changes of the inner call.
+     *
+     * @param callable $work A function that performs the database operations.
+     * @return mixed The value returned by $work.
+     * @throws \Throwable Whatever $work throws, after the rollback.
+     */
+    protected function transaction(callable $work): mixed
+    {
+        if (!$this->db->inTransaction()) {
+            $this->db->beginTransaction();
+            try {
+                $result = $work();
+                $this->db->commit();
+                return $result;
+            } catch (\Throwable $e) {
+                if ($this->db->inTransaction()) {
+                    $this->db->rollBack();
+                }
+                throw $e;
+            }
+        }
+
+        //already in a transaction: protect the inner work with a savepoint
+        $savepoint = 'savepoint_' . (++self::$savepoint_counter);
+        $this->db->exec("SAVEPOINT $savepoint");
+        try {
+            $result = $work();
+            $this->db->exec("RELEASE SAVEPOINT $savepoint");
+            return $result;
+        } catch (\Throwable $e) {
+            $this->db->exec("ROLLBACK TO SAVEPOINT $savepoint");
+            throw $e;
         }
     }
 
@@ -212,17 +293,43 @@ abstract class BaseModel
 
 
     /**
-     * Counts the number of rows affected by a SQL query.
+     * Returns the result of a COUNT query.
      *
-     * This method executes a SQL query and returns the count of rows that were affected.
+     * This method executes a SELECT COUNT(*) query and returns the number it produces
+     * (e.g. "SELECT COUNT(*) FROM users WHERE status = ?"). It reads the first column
+     * of the first row, so do not pass a "SELECT *" query.
      *
-     * @param string $sql The SQL query to be executed, typically a SELECT query.
+     * @param string $sql The COUNT query to be executed.
      * @param array $args An optional array of parameters to bind to the SQL query.
-     * @return int The number of rows affected by the query.
+     * @return int The count produced by the query, or 0 if the query returns no row.
      */
     protected function count(string $sql, array $args = []): int
     {
-        return $this->run($sql, $args)->rowCount();
+        return (int) $this->run($sql, $args)->fetchColumn();
+    }
+
+    /**
+     * Counts the number of rows that a SELECT query produces.
+     *
+     * Use it when you need the total number of rows of a query, for example to
+     * paginate its results. Pass the same query and parameters that you would
+     * pass to fetchAll(), without the LIMIT and OFFSET of the page.
+     *
+     * The rows are counted by the database (the query is wrapped in a
+     * SELECT COUNT(*)), so they are not transferred to PHP. Because of that,
+     * every column selected by the query must have a unique name: give an
+     * alias to columns that share a name in a JOIN (e.g. two "id" columns).
+     *
+     * @param string $sql The SELECT query whose rows are to be counted.
+     * @param array $args An optional array of parameters to bind to the SQL query.
+     * @return int The number of rows that the query produces.
+     */
+    protected function countRows(string $sql, array $args = []): int
+    {
+        //a trailing semicolon is not allowed inside a subquery
+        $sql = rtrim($sql, "; \t\n\r");
+
+        return $this->count("SELECT COUNT(*) FROM ($sql) AS counted_rows", $args);
     }
 
     /**
@@ -282,7 +389,8 @@ abstract class BaseModel
      * @param array $data An associative array of table column-value pairs to update (e.g.,
      *              ["username"=>"frostybee", "email" =>"frostybee@me.com"]).
      * @param array $where_conditions An associative array of conditions for the update
-     *              (e.g., ["user_id"=> 3]).
+     *              (e.g., ["user_id"=> 3]). Conditions are joined with AND. A null
+     *              value matches rows where the column IS NULL.
      * @return int The number of rows affected by the update operation.
      */
     protected function update(string $table, array $data, array $where_conditions): int
@@ -305,25 +413,18 @@ abstract class BaseModel
             );
         }
 
-        //merge data and where together
-        $collection = array_merge($data, $where_conditions);
-
-        //collect the values from collection
-        $values = array_values($collection);
-
         //setup fields
         $field_parts = [];
-        foreach ($data as $key => $value) {
+        foreach (array_keys($data) as $key) {
             $field_parts[] = $this->quoteIdentifier($key) . ' = ?';
         }
         $field_details = implode(', ', $field_parts);
 
         //setup where
-        $where_parts = [];
-        foreach ($where_conditions as $key => $value) {
-            $where_parts[] = $this->quoteIdentifier($key) . ' = ?';
-        }
-        $where_details = implode(' AND ', $where_parts);
+        [$where_details, $where_values] = $this->buildWhere($where_conditions);
+
+        //the values of the fields come first, then the values of the conditions
+        $values = array_merge(array_values($data), $where_values);
 
         $stmt = $this->run("UPDATE $table SET $field_details WHERE $where_details", $values);
 
@@ -333,10 +434,15 @@ abstract class BaseModel
     /**
      * Deletes record(s) from the specified table based on the given conditions.
      *
+     * By default, at most ONE matching record is deleted. Pass a higher $limit to
+     * delete more, or 0 to delete every matching record.
+     *
      * @param string $table The name of the table from which to delete records.
      * @param array $where_conditions An associative array of conditions for the deletion
-     * in the form of ['table_column' => 'value'] (e.g., ['user_id' => 3]).
+     * in the form of ['table_column' => 'value'] (e.g., ['user_id' => 3]). Conditions
+     * are joined with AND. A null value matches rows where the column IS NULL.
      * @param int $limit The maximum number of records to delete. Default is 1.
+     *                   Use 0 for no limit.
      *
      * @return int The number of rows affected by the delete operation.
      */
@@ -352,18 +458,11 @@ abstract class BaseModel
             );
         }
 
-        //collect the values from collection
-        $values = array_values($where_conditions);
-
         //setup where
-        $where_parts = [];
-        foreach ($where_conditions as $key => $value) {
-            $where_parts[] = $this->quoteIdentifier($key) . ' = ?';
-        }
-        $where_details = implode(' AND ', $where_parts);
+        [$where_details, $values] = $this->buildWhere($where_conditions);
 
-        //if limit is a number use a limit on the query
-        $limit_clause = is_numeric($limit) && $limit > 0 ? " LIMIT $limit" : "";
+        //a limit of 0 (or less) means no limit
+        $limit_clause = $limit > 0 ? " LIMIT $limit" : "";
 
         $stmt = $this->run("DELETE FROM $table WHERE $where_details$limit_clause", $values);
 

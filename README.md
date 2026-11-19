@@ -196,6 +196,7 @@ To install or update your project dependencies deployed on Wampoon, use the `com
 | Update dependencies   | `.\composer.bat update`            | Refreshes all packages to the latest versions allowed by `composer.json`.       |
 | Add a package         | `.\composer.bat require [package]` | Installs a new package and adds it to `composer.json`.                          |
 | Regenerate autoloader | `.\composer.bat dump-autoload -o`  | Rebuilds the optimized autoloader after adding or removing classes.             |
+| Run the tests         | `.\composer.bat test`              | Runs the PHPUnit tests in the `tests` directory. No database server is needed.  |
 
 ## On Using Environment Variables
 

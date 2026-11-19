@@ -26,6 +26,11 @@
       "App\\": "app/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
   "require": {
     "php": ">=8.2",
     "ext-json": "*",
@@ -40,12 +45,17 @@
     "php-di/php-di": "^7.1",
     "slim/slim": "^4.15"
   },
+  "require-dev": {
+    "ext-pdo_sqlite": "*",
+    "phpunit/phpunit": "^11.5"
+  },
   "config": {
     "process-timeout": 0,
     "sort-packages": true
   },
   "scripts": {
     "start": "php -S localhost:8080 -t public public/index.php",
+    "test": "phpunit",
     "post-create-project-cmd": [
       "@php -r \"copy('config/env.example.php', 'config/env.php');\""
     ]
