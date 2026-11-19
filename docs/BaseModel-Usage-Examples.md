@@ -75,7 +75,8 @@ try {
 ```php
 // The insert method automatically validates:
 // 1. Table name format
-// 2. Non-empty data array
+// 2. Column name format (the keys of the data array)
+// 3. Non-empty data array
 
 // This will throw InvalidArgumentException.
 try {
@@ -87,12 +88,38 @@ try {
 
 // This will also throw InvalidArgumentException.
 try {
+    $this->insert('users', ['first name' => 'John']); // Invalid column name
+} catch (InvalidArgumentException $e) {
+    echo $e->getMessage();
+    // Output: "Invalid column name: 'first name'. Column names can only contain..."
+}
+
+// This will also throw InvalidArgumentException.
+try {
     $this->insert('users', []); // Empty data
 } catch (InvalidArgumentException $e) {
     echo $e->getMessage();
     // Output: "No data provided for insert operation. Please provide..."
 }
 ```
+
+### Table and Column Names
+
+`insert()`, `update()`, and `delete()` apply the same rules to the table name and to every array key used as a column name:
+
+- A name can contain only letters, numbers, and underscores, and must start with a letter or underscore. Any other name throws `InvalidArgumentException`, which prevents SQL injection through array keys.
+- Each name is wrapped in backticks in the generated SQL, so names that are reserved SQL keywords work without extra quoting.
+
+The following example inserts into a column named `condition`, which is a reserved keyword in MariaDB:
+
+```php
+$artifactId = $this->insert('artifacts', [
+    'artifact_name' => 'Bronze lamp',
+    'condition' => 'good'
+]);
+```
+
+SQL passed to `fetchAll()`, `fetchSingle()`, and `count()` is not changed. Wrap reserved keywords in backticks yourself in those queries.
 
 ## Select Operations
 
@@ -173,8 +200,10 @@ try {
 
 ### Update Multiple Conditions
 
+`update()` joins the conditions with `AND` and compares each one with `=`.
+
 ```php
-// Update all inactive users from a specific domain.
+// Archive all inactive users that have the "member" role.
 $updateData = [
     'status' => 'archived',
     'archived_at' => date('Y-m-d H:i:s')
@@ -182,14 +211,24 @@ $updateData = [
 
 $whereConditions = [
     'status' => 'inactive',
-    'email' => '%@olddomain.com' // Note: Use LIKE in SQL for wildcards
+    'role' => 'member'
 ];
 
-// For LIKE operations, use raw SQL
+$affectedRows = $this->update('users', $updateData, $whereConditions);
+```
+
+### Update with Raw SQL
+
+For a condition that `update()` cannot express, such as `LIKE`, pass your own SQL to `run()`. `run()` returns a `PDOStatement`.
+
+```php
+// Archive all inactive users from a specific email domain.
 $sql = "UPDATE users SET status = ?, archived_at = ? WHERE status = ? AND email LIKE ?";
 $stmt = $this->run($sql, ['archived', date('Y-m-d H:i:s'), 'inactive', '%@olddomain.com']);
 $affectedRows = $stmt->rowCount();
 ```
+
+`run()` does not validate or quote table and column names. Write them in the SQL yourself, and pass every value through the parameter array.
 
 ### Update Validation Examples
 
@@ -261,7 +300,7 @@ try {
     $result = $this->insert('users', $userData);
     
 } catch (InvalidArgumentException $e) {
-    // Validation errors (empty data, invalid table names, missing conditions)
+    // Validation errors (empty data, invalid table or column names, missing conditions)
     return $response->withJson([
         'error' => 'Validation failed',
         'message' => $e->getMessage()

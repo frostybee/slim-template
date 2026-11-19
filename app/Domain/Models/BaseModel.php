@@ -42,25 +42,42 @@ abstract class BaseModel
     }
 
     /**
-     * Validates a table name to prevent SQL injection.
+     * Validates a table or column name and wraps it in backticks.
      *
-     * @param string $table The table name to validate
-     * @throws InvalidArgumentException If table name is invalid
+     * Validation prevents SQL injection through identifiers. The backticks
+     * allow names that are reserved SQL keywords (e.g. `condition`, `order`).
+     *
+     * @param string|int $name The table or column name to validate and quote.
+     *                         Integer keys from list-style arrays are rejected.
+     * @param string $kind Either 'table' or 'column'. Used in error messages.
+     * @return string The validated name wrapped in backticks.
+     * @throws InvalidArgumentException If the name is empty or invalid
      */
-    private function validateTableName(string $table): void
+    private function quoteIdentifier(string|int $name, string $kind = 'column'): string
     {
-        if (empty($table)) {
-            throw new \InvalidArgumentException("Table name cannot be empty. Please provide a valid table name.");
-        }
+        $name = (string) $name;
+        $label = ucfirst($kind);
 
-        if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $table)) {
+        if ($name === '') {
             throw new \InvalidArgumentException(
-                "Invalid table name: '$table'. " .
-                    "Table names can only contain letters, numbers, and underscores, " .
-                    "and must start with a letter or underscore. " .
-                    "Example: 'users', 'user_profiles', 'Product_Categories'"
+                "$label name cannot be empty. Please provide a valid $kind name."
             );
         }
+
+        if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $name)) {
+            $examples = $kind === 'table'
+                ? "'users', 'user_profiles', 'Product_Categories'"
+                : "'email', 'first_name', 'created_at'";
+
+            throw new \InvalidArgumentException(
+                "Invalid $kind name: '$name'. " .
+                    "$label names can only contain letters, numbers, and underscores, " .
+                    "and must start with a letter or underscore. " .
+                    "Example: $examples"
+            );
+        }
+
+        return "`$name`";
     }
 
     /**
@@ -101,12 +118,17 @@ abstract class BaseModel
      * This method prepares and executes a SQL statement, binding parameters appropriately
      * whether they are provided as an associative or indexed array.
      *
+     * Use it in a model for statements that insert(), update(), and delete()
+     * cannot express (e.g. an UPDATE with a LIKE condition). Table and column
+     * names in $sql are not validated or quoted: never build $sql from user
+     * input, pass values through $args instead.
+     *
      * @param string $sql The SQL query to be executed.
      * @param array $args An optional array of parameters to bind to the SQL query.
      *                     If empty, the query is executed directly without parameter binding.
-     * @return PDOStatement The PDOStatement object representing the prepared statement.
+     * @return \PDOStatement The PDOStatement object representing the prepared statement.
      */
-    private function run(string $sql, array $args = [])
+    protected function run(string $sql, array $args = []): \PDOStatement
     {
         try {
             if (empty($args)) {
@@ -227,7 +249,7 @@ abstract class BaseModel
      */
     protected function insert(string $table, array $data): mixed
     {
-        $this->validateTableName($table);
+        $table = $this->quoteIdentifier($table, 'table');
 
         if (empty($data)) {
             throw new \InvalidArgumentException(
@@ -237,9 +259,10 @@ abstract class BaseModel
             );
         }
 
-        //add columns into comma separated string and surround with backticks
-        //to avoid errors related to reserved SQL keywords (e.g. `condition`)
-        $columns = implode(',', array_map(fn($s) => "`$s`", array_keys($data)));
+        //add columns into comma separated string. Each name is validated and
+        //surrounded with backticks to avoid errors related to reserved SQL
+        //keywords (e.g. `condition`)
+        $columns = implode(',', array_map(fn($key) => $this->quoteIdentifier($key), array_keys($data)));
 
         //get values
         $values = array_values($data);
@@ -264,7 +287,7 @@ abstract class BaseModel
      */
     protected function update(string $table, array $data, array $where_conditions): int
     {
-        $this->validateTableName($table);
+        $table = $this->quoteIdentifier($table, 'table');
 
         if (empty($data)) {
             throw new \InvalidArgumentException(
@@ -291,14 +314,14 @@ abstract class BaseModel
         //setup fields
         $field_parts = [];
         foreach ($data as $key => $value) {
-            $field_parts[] = "$key = ?";
+            $field_parts[] = $this->quoteIdentifier($key) . ' = ?';
         }
         $field_details = implode(', ', $field_parts);
 
         //setup where
         $where_parts = [];
         foreach ($where_conditions as $key => $value) {
-            $where_parts[] = "$key = ?";
+            $where_parts[] = $this->quoteIdentifier($key) . ' = ?';
         }
         $where_details = implode(' AND ', $where_parts);
 
@@ -319,7 +342,7 @@ abstract class BaseModel
      */
     protected function delete(string $table, array $where_conditions, int $limit = 1): int
     {
-        $this->validateTableName($table);
+        $table = $this->quoteIdentifier($table, 'table');
 
         if (empty($where_conditions)) {
             throw new \InvalidArgumentException(
@@ -335,7 +358,7 @@ abstract class BaseModel
         //setup where
         $where_parts = [];
         foreach ($where_conditions as $key => $value) {
-            $where_parts[] = "$key = ?";
+            $where_parts[] = $this->quoteIdentifier($key) . ' = ?';
         }
         $where_details = implode(' AND ', $where_parts);
 
